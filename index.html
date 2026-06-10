@@ -3,41 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全链路产品定价核算 ERP - 灵动高定版</title>
+    <title>全链路产品定价核算 ERP - 柔和高定版</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
-        /* ==================== 顶级灵动微质感 UI 架构 ==================== */
+        /* ==================== 顶级灵动微质感 UI 架构 (Apple级柔和圆角) ==================== */
         :root {
-            /* 全局底色与弥散光效 */
             --bg-body: #f1f5f9;
             --bg-card: rgba(255, 255, 255, 0.95);
-            
-            /* 沉浸式深色穹顶 */
             --header-bg: #0f172a;
             --header-text: #f8fafc;
-            
-            /* 工业级精密边框与双层投影 */
             --border-light: rgba(226, 232, 240, 0.8);
             --border-base: #cbd5e1;
             --border-active: #94a3b8;
             --shadow-card: 0 10px 30px -10px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,1);
             --shadow-float: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,1);
-            
-            /* 字体色彩层级 */
             --text-main: #0f172a;
             --text-label: #475569;
             --text-muted: #94a3b8;
-            
-            /* 交互高光 (段落感) */
             --focus-ring: rgba(99, 102, 241, 0.25);
             --focus-border: #4f46e5;
-            
-            /* 品牌色 */
             --color-wb: #cb11ab;
             --color-ozon: #005bff;
         }
@@ -50,46 +40,30 @@
             min-height: 100vh; 
             color: var(--text-main); 
             -webkit-font-smoothing: antialiased;
-            position: relative;
-            z-index: 0;
-        }
-
-        /* 💡 灵魂注入：全局幻彩弥散背景光 */
-        body::before {
-            content: ''; position: fixed; top: -10%; left: -10%; width: 50vw; height: 50vh;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
-            z-index: -1; pointer-events: none;
-        }
-        body::after {
-            content: ''; position: fixed; bottom: -10%; right: -10%; width: 50vw; height: 50vh;
-            background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 60%);
-            z-index: -1; pointer-events: none;
+            position: relative; z-index: 0;
+            user-select: none;
         }
         
+        input, select, textarea { user-select: auto; }
+
+        /* 幻彩弥散背景光 */
+        body::before { content: ''; position: fixed; top: -10%; left: -10%; width: 50vw; height: 50vh; background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 60%); z-index: -1; pointer-events: none; }
+        body::after { content: ''; position: fixed; bottom: -10%; right: -10%; width: 50vw; height: 50vh; background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 60%); z-index: -1; pointer-events: none; }
+        
         /* 沉浸式顶栏 */
-        .top-nav {
-            background-color: var(--header-bg);
-            color: var(--header-text);
-            padding: 1.25rem 0;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-            position: sticky; top: 0; z-index: 100;
-        }
-        .nav-content {
-            width: 98%; max-width: 1600px; margin: 0 auto; padding: 0 1rem;
-            display: flex; justify-content: space-between; align-items: center;
-        }
+        .top-nav { background-color: var(--header-bg); color: var(--header-text); padding: 1.25rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .nav-content { width: 98%; max-width: 1600px; margin: 0 auto; padding: 0 1rem; display: flex; justify-content: space-between; align-items: center; }
         .header-title h1 { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; margin: 0; color: #fff;}
         .nav-actions { display: flex; gap: 1rem; }
 
-        /* 统一按键交互 */
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.6rem 1.25rem; border-radius: 6px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.15s ease; border: 1px solid transparent; outline: none; }
+        /* 统一按键交互 (柔和圆角 10px) */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.6rem 1.25rem; border-radius: 10px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.15s ease; border: 1px solid transparent; outline: none; }
         .btn:active { transform: translateY(1px); }
         .btn:focus-visible { box-shadow: 0 0 0 2px var(--bg-body), 0 0 0 4px var(--focus-border); }
         .btn-primary { background-color: #4f46e5; color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         .btn-primary:hover { background-color: #4338ca; }
         .btn-outline { background-color: #ffffff; border-color: var(--border-base); color: var(--text-label); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         .btn-outline:hover { background-color: #f8fafc; border-color: var(--border-active); color: var(--text-main); }
-        
         .btn-nav { background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); color: #e2e8f0; backdrop-filter: blur(4px);}
         .btn-nav:hover { background-color: rgba(255,255,255,0.2); color: #fff; }
         .btn-nav-danger { background-color: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: #fca5a5; }
@@ -97,9 +71,9 @@
 
         .container { width: 98%; max-width: 1600px; margin: 0 auto; padding: 2rem 1rem; }
 
-        /* 平台选择引擎 (微悬浮质感) */
+        /* 平台选择引擎 (超柔和圆角 24px) */
         .platform-selector { display: flex; gap: 2rem; margin-bottom: 2.5rem; justify-content: center; flex-wrap: wrap; }
-        .platform-card { flex: 1; min-width: 300px; max-width: 420px; border-radius: 16px; padding: 2.5rem 2rem; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); text-align: center; color: white; box-shadow: var(--shadow-card); border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;}
+        .platform-card { flex: 1; min-width: 300px; max-width: 420px; border-radius: 24px; padding: 2.5rem 2rem; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); text-align: center; color: white; box-shadow: var(--shadow-card); border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;}
         .platform-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-float); }
         .card-wb { background: linear-gradient(135deg, #d926b9 0%, #8b00ff 100%); }
         .card-ozon { background: linear-gradient(135deg, #1a6dff 0%, #003b99 100%); }
@@ -107,35 +81,32 @@
         .logo-ozon { font-size: 3.5rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 0; font-family: 'Arial Black', Impact, sans-serif; text-shadow: 0 2px 4px rgba(0,0,0,0.2); position: relative; z-index: 2;}
         .platform-card .sub-text { font-size: 1rem; font-weight: 600; opacity: 0.95; margin-top: 0.5rem; position: relative; z-index: 2;}
 
-        /* 极简大写平台标签 */
-        .plat-tag { padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 800; color: white; display: inline-flex; align-items: center; letter-spacing: 0.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);}
+        .plat-tag { padding: 0.25rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 800; color: white; display: inline-flex; align-items: center; letter-spacing: 0.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);}
         .tag-wb { background-color: var(--color-wb); }
         .tag-ozon { background-color: var(--color-ozon); }
 
-        /* 实体精密面板 (白卡片+弥散阴影+毛玻璃) */
-        .card { background: var(--bg-card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 12px; box-shadow: var(--shadow-card); border: 1px solid var(--border-light); padding: 1.75rem 2rem; margin-bottom: 0; }
+        /* 实体精密面板 (大圆角 20px) */
+        .card { background: var(--bg-card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 20px; box-shadow: var(--shadow-card); border: 1px solid var(--border-light); padding: 1.75rem 2rem; margin-bottom: 0; }
         .card-title { font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.5rem; color: var(--text-main); }
         .card-title-indicator { width: 4px; height: 18px; border-radius: 2px; }
         .sub-module-title { font-size: 0.95rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--border-light); color: var(--text-main); position: relative; z-index: 2;}
 
-        /* ===== 网格对齐系统 ===== */
+        /* 网格对齐系统 */
         .input-row { display: flex; flex-wrap: wrap; gap: 1rem; align-items: stretch; margin-bottom: 1rem; position: relative; z-index: 2;}
         .result-row { display: flex; flex-wrap: wrap; gap: 1rem; padding-top: 0.5rem; position: relative; z-index: 2;}
 
-        /* 输入控件交互 (精确锁定光晕) */
-        .input-group { background: #ffffff; border-radius: 6px; padding: 0.6rem 0.85rem; display: flex; flex-direction: column; justify-content: center; transition: all 0.2s ease; flex: 1; min-width: 140px; border: 1px solid var(--border-base); box-shadow: 0 1px 2px rgba(0,0,0,0.02);}
+        /* 输入控件 (内部结构圆角 12px) */
+        .input-group { background: #ffffff; border-radius: 12px; padding: 0.6rem 0.85rem; display: flex; flex-direction: column; justify-content: center; transition: all 0.2s ease; flex: 1; min-width: 140px; border: 1px solid var(--border-base); box-shadow: 0 1px 2px rgba(0,0,0,0.02);}
         .input-group:hover { border-color: var(--border-active); }
         .input-group:focus-within { border-color: var(--focus-border); box-shadow: 0 0 0 3px var(--focus-ring); }
         .input-group label { font-size: 0.75rem; font-weight: 600; color: var(--text-label); margin-bottom: 0.35rem; }
         
         .input-wrapper { display: flex; align-items: center; gap: 0.4rem; position: relative; width: 100%;}
         .symbol { font-weight: 600; color: var(--text-muted); font-size: 0.95rem; }
-        /* 专属数据美学：等宽字体显示数字 */
-        input[type="number"], input[type="text"] { background: transparent; border: none; font-size: 1.1rem; font-weight: 700; color: var(--text-main); outline: none; width: 100%; min-width: 2rem; text-align: left; font-family: 'Inter', monospace; font-variant-numeric: tabular-nums;}
+        input[type="number"], input[type="text"], .value-readonly { background: transparent; border: none; font-size: 1.1rem; font-weight: 700; color: var(--text-main); outline: none; width: 100%; min-width: 2rem; text-align: left; font-family: 'Inter', monospace; font-variant-numeric: tabular-nums; display: flex; align-items: center;}
         input::placeholder { color: var(--border-active); font-weight: 400; }
         
-        /* 尺寸复合输入框 */
-        .combo-group { background: #ffffff; border-radius: 6px; padding: 0.6rem 0.85rem; display: flex; flex-direction: column; justify-content: center; flex: 1; min-width: 260px; transition: all 0.2s ease; border: 1px solid var(--border-base); box-shadow: 0 1px 2px rgba(0,0,0,0.02);}
+        .combo-group { background: #ffffff; border-radius: 12px; padding: 0.6rem 0.85rem; display: flex; flex-direction: column; justify-content: center; flex: 1; min-width: 260px; transition: all 0.2s ease; border: 1px solid var(--border-base); box-shadow: 0 1px 2px rgba(0,0,0,0.02);}
         .combo-group:hover { border-color: var(--border-active); }
         .combo-group:focus-within { border-color: var(--focus-border); box-shadow: 0 0 0 3px var(--focus-ring); }
         .combo-group label { font-size: 0.75rem; font-weight: 600; color: var(--text-label); margin-bottom: 0.35rem; }
@@ -147,47 +118,37 @@
         .select-wrapper { position: relative; display: flex; align-items: center; width: 100%;}
         .select-wrapper::after { content: "▼"; font-size: 0.6rem; position: absolute; right: 0; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-muted); }
 
-        /* 3. 数据模块情绪化着色 */
-        .result-box { border-radius: 6px; padding: 0.85rem 1rem; display: flex; flex-direction: column; justify-content: center; flex: 1; min-width: 150px; border: 1px solid transparent; transition: all 0.2s ease; background: #fff;}
+        /* 💡 终极渲染层修复：替换 Input 为 Div，彻底杜绝 html2canvas 截断文字Bug */
+        .result-box { border-radius: 12px; padding: 0.85rem 1rem; display: flex; flex-direction: column; justify-content: center; flex: 1; min-width: 150px; border: 1px solid transparent; transition: all 0.2s ease; background: #fff;}
         .result-box label { font-size: 0.8rem; font-weight: 600; margin-bottom: 0.4rem; line-height: 1.2; letter-spacing: 0.02em;}
-        .result-box input { font-size: 1.5rem; font-weight: 800; width: 100%; text-align: right; font-family: 'Inter', monospace; font-variant-numeric: tabular-nums; letter-spacing: -0.03em;} 
+        .value-display { flex: 1; font-size: 1.5rem; font-weight: 800; text-align: right; font-family: 'Inter', monospace; font-variant-numeric: tabular-nums; letter-spacing: -0.03em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; justify-content: flex-end;}
         
-        /* 💡 修复：₽与数字完美贴紧 */
         .text-left-input .input-wrapper { display: flex; justify-content: flex-start; align-items: center; gap: 0.2rem; }
-        .text-left-input input { text-align: left !important; flex: 1; width: 100%;}
+        .text-left-input .value-display { justify-content: flex-start; text-align: left; }
 
-        /* 标题标识色 */
+        /* 标题与色彩体系 */
         .bg-indigo { background-color: var(--color-indigo-500); } .bg-emerald { background-color: var(--color-emerald-500); } .bg-amber { background-color: var(--color-amber-500); } .bg-rose { background-color: var(--color-rose-500); } .bg-ozon { background-color: var(--color-ozon); }
         
-        /* 情绪着色系 (低饱和微质感) */
         .res-tint-blue { background: #eff6ff; border-color: #bfdbfe; }
-        .res-tint-blue label { color: #1e40af; } .res-tint-blue .symbol { color: #60a5fa; } .res-tint-blue input { color: #1e3a8a; }
-
-        .res-tint-green { background: #f0fdf4; border-color: #bbf7d0; }
-        .res-tint-green label { color: #166534; } .res-tint-green .symbol { color: #4ade80; } .res-tint-green input { color: #14532d; }
-
+        .res-tint-blue label { color: #1e40af; } .res-tint-blue .symbol { color: #60a5fa; } .res-tint-blue .value-display { color: #1e3a8a; }
         .res-tint-red { background: #fef2f2; border-color: #fecaca; }
-        .res-tint-red label { color: #991b1b; } .res-tint-red .symbol { color: #f87171; } .res-tint-red input { color: #7f1d1d; }
-
+        .res-tint-red label { color: #991b1b; } .res-tint-red .symbol { color: #f87171; } .res-tint-red .value-display { color: #7f1d1d; }
         .res-tint-amber { background: #fffbeb; border-color: #fde68a; }
-        .res-tint-amber label { color: #92400e; } .res-tint-amber .symbol { color: #fbbf24; } .res-tint-amber input { color: #78350f; }
-        
+        .res-tint-amber label { color: #92400e; } .res-tint-amber .symbol { color: #fbbf24; } .res-tint-amber .value-display { color: #78350f; }
         .res-tint-teal { background: #f0fdfa; border-color: #99f6e4; }
-        .res-tint-teal label { color: #115e59; } .res-tint-teal .symbol { color: #2dd4bf; } .res-tint-teal input { color: #134e4a; }
-
+        .res-tint-teal label { color: #115e59; } .res-tint-teal .symbol { color: #2dd4bf; } .res-tint-teal .value-display { color: #134e4a; }
         .res-tint-gray { background: #f8fafc; border-color: #e2e8f0; }
-        .res-tint-gray label { color: #475569; } .res-tint-gray input { color: #0f172a; }
+        .res-tint-gray label { color: #475569; } .res-tint-gray .value-display { color: #0f172a; }
 
-        /* 💡 终极修复：强制高饱和实色块 (修复白底白字Bug) */
+        /* 强制高饱和实色块 */
         .res-solid-green { background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important; border: none !important; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3) !important; }
-        .res-solid-green label, .res-solid-green .symbol, .res-solid-green input { color: #ffffff !important; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-        
+        .res-solid-green label, .res-solid-green .symbol, .res-solid-green .value-display { color: #ffffff !important; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
         .res-solid-red { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important; border: none !important; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3) !important; }
-        .res-solid-red label, .res-solid-red .symbol, .res-solid-red input { color: #ffffff !important; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        .res-solid-red label, .res-solid-red .symbol, .res-solid-red .value-display { color: #ffffff !important; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
 
-        .res-small { padding: 0.75rem 1rem; } .res-small input { font-size: 1.25rem; }
+        .res-small { padding: 0.75rem 1rem; } .res-small .value-display { font-size: 1.25rem; }
 
-        /* 💡 灵魂注入：平台巨型底纹水印 */
+        /* 品牌巨型底纹水印 */
         #wb-module-2, #ozon-module-2 { position: relative; overflow: hidden; }
         #wb-module-2::after { content: 'W B'; position: absolute; right: -5px; bottom: -20px; font-size: 150px; font-weight: 900; color: var(--color-wb); opacity: 0.03; z-index: 1; pointer-events: none; line-height: 1; font-family: 'Arial Black', Impact, sans-serif;}
         #ozon-module-2::after { content: 'O Z'; position: absolute; right: -5px; bottom: -20px; font-size: 150px; font-weight: 900; color: var(--color-ozon); opacity: 0.03; z-index: 1; pointer-events: none; line-height: 1; font-family: 'Arial Black', Impact, sans-serif;}
@@ -197,35 +158,41 @@
         @media (max-width: 1200px) { .detail-grid { grid-template-columns: 1fr; } }
         .col-left, .col-right { display: flex; flex-direction: column; gap: 1.5rem; }
 
-        /* 详情控制条 */
-        .action-bar { background: var(--card-bg); backdrop-filter: blur(16px); border-radius: 12px; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; box-shadow: var(--shadow-card); border: 1px solid var(--border-light); flex-wrap: wrap; gap: 1rem;}
+        /* 详情动作控制条 (圆角 16px) */
+        .action-bar { background: var(--bg-card); backdrop-filter: blur(16px); border-radius: 16px; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; box-shadow: var(--shadow-card); border: 1px solid var(--border-light); flex-wrap: wrap; gap: 1rem;}
         
-        .sku-input { background: #ffffff; border: 1px solid var(--border-base); border-radius: 6px; padding: 0.6rem 1rem; font-size: 1rem; font-weight: 700; color: var(--color-indigo-500); width: 280px; outline: none; transition: all 0.2s ease; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);}
+        .sku-input { background: #ffffff; border: 1px solid var(--border-base); border-radius: 10px; padding: 0.6rem 1rem; font-size: 1rem; font-weight: 700; color: var(--color-indigo-500); width: 280px; outline: none; transition: all 0.2s ease; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);}
         .sku-input:focus { border-color: var(--focus-border); box-shadow: 0 0 0 3px var(--focus-ring); }
 
-        .template-group { display: flex; align-items: center; gap: 0.5rem; background: #ffffff; border: 1px solid var(--border-base); border-radius: 6px; padding: 0.25rem 0.5rem; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.02);}
+        .template-group { display: flex; align-items: center; gap: 0.5rem; background: #ffffff; border: 1px solid var(--border-base); border-radius: 10px; padding: 0.25rem 0.5rem; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.02);}
         .template-group:focus-within { border-color: var(--focus-border); box-shadow: 0 0 0 3px var(--focus-ring); }
         .template-group select { border: none; background: transparent; font-size: 0.9rem; font-weight: 600; color: var(--text-main); width: 150px; padding-left: 0.5rem; outline: none; }
-        .btn-icon { border: none; background: transparent; padding: 0.4rem 0.75rem; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.15s; color: var(--text-label);}
+        .btn-icon { border: none; background: transparent; padding: 0.4rem 0.75rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.15s; color: var(--text-label);}
         .btn-icon:hover { background: #f1f5f9; color: var(--text-main); } 
 
-        /* 💡 修复：灵动呼吸光效进度条 */
+        /* 灵动呼吸光效进度条 (完美规避截图裁切) */
         @keyframes gradient-x { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .progress-box { position: relative; overflow: hidden; background: #f8fafc; border: 1px solid var(--border-light); border-radius: 6px; padding: 1.25rem 1.5rem; display: flex; flex-direction: column; min-width: 160px; z-index: 1; }
+        .progress-box { position: relative; overflow: hidden; background: #f8fafc; border: 1px solid var(--border-light); border-radius: 12px; padding: 1.25rem 1.5rem; display: flex; flex-direction: column; min-width: 160px; z-index: 1; }
         .progress-bar { position: absolute; top: 0; left: 0; height: 100%; z-index: -1; transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
         .progress-box label { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-label); }
-        .progress-box input { font-size: 2.2rem; font-weight: 800; color: var(--text-main); text-align: right; width: 100%; background: transparent; border: none; outline: none; font-family: 'Inter', monospace; font-variant-numeric: tabular-nums; letter-spacing: -1px;}
         
-        .bar-green { background: linear-gradient(90deg, rgba(16,185,129,0.5), rgba(52,211,153,0.1), rgba(16,185,129,0.5)) !important; background-size: 200% 200% !important; animation: gradient-x 3s linear infinite !important; }
-        .bar-red { background: linear-gradient(90deg, rgba(239,68,68,0.5), rgba(248,113,113,0.1), rgba(239,68,68,0.5)) !important; background-size: 200% 200% !important; animation: gradient-x 2s linear infinite !important; border-right: 4px solid #b91c1c; }
-        .text-red-alert input,.text-red-alert label { color: #b91c1c !important; }
+        /* 超大字体 Div 展示层，替代 Input */
+        .progress-box .value-display { font-size: 2.2rem; font-weight: 800; color: var(--text-main); text-align: right; width: 100%; justify-content: flex-end; letter-spacing: -1px;}
+        #profitRubBox .value-display, #profitRmbBox .value-display, #wb_wbTotalDeduction, #ozon_wbTotalDeduction { font-size: 2.2rem; }
 
-        /* 表格区域 */
-        .table-container { background: var(--card-bg); border-radius: 12px; padding: 1.5rem; box-shadow: var(--shadow-card); border: 1px solid var(--border-light); overflow-x: auto;}
+        .bar-green { background-image: linear-gradient(90deg, rgba(16,185,129,0.7), rgba(52,211,153,0.2), rgba(16,185,129,0.7)) !important; background-size: 200% 100% !important; animation: gradient-x 2.5s ease-in-out infinite !important; }
+        .bar-red { background-image: linear-gradient(90deg, rgba(239,68,68,0.8), rgba(248,113,113,0.3), rgba(239,68,68,0.8)) !important; background-size: 200% 100% !important; animation: gradient-x 2s ease-in-out infinite !important; border-right: 4px solid #b91c1c; }
+        .text-red-alert .value-display,.text-red-alert label { color: #b91c1c !important; }
+        
+        /* 快门动画冻结指令 */
+        .no-animation * { animation: none !important; transition: none !important; }
+
+        /* 表格区域 (圆角 20px) */
+        .table-container { background: var(--bg-card); border-radius: 20px; padding: 1.5rem; box-shadow: var(--shadow-card); border: 1px solid var(--border-light); overflow-x: auto;}
         .filter-bar { display: flex; gap: 1rem; margin-bottom: 1.5rem; align-items: center; }
-        .filter-input { background: #ffffff; border: 1px solid var(--border-base); border-radius: 6px; padding: 0.6rem 1rem; font-size: 0.95rem; font-weight: 500; color: var(--text-main); outline: none; transition: all 0.2s ease; width: 320px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);}
+        .filter-input { background: #ffffff; border: 1px solid var(--border-base); border-radius: 10px; padding: 0.6rem 1rem; font-size: 0.95rem; font-weight: 500; color: var(--text-main); outline: none; transition: all 0.2s ease; width: 320px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);}
         .filter-input:focus { border-color: var(--focus-border); box-shadow: 0 0 0 3px var(--focus-ring); }
-        .filter-select { background: #ffffff; border: 1px solid var(--border-base); border-radius: 6px; padding: 0.6rem 1rem; font-size: 0.95rem; font-weight: 500; color: var(--text-main); outline: none; cursor: pointer; width: 200px; box-shadow: 0 1px 2px rgba(0,0,0,0.02); transition: all 0.2s ease;}
+        .filter-select { background: #ffffff; border: 1px solid var(--border-base); border-radius: 10px; padding: 0.6rem 1rem; font-size: 0.95rem; font-weight: 500; color: var(--text-main); outline: none; cursor: pointer; width: 200px; box-shadow: 0 1px 2px rgba(0,0,0,0.02); transition: all 0.2s ease;}
         .filter-select:focus { border-color: var(--focus-border); box-shadow: 0 0 0 3px var(--focus-ring); }
 
         table { width: 100%; border-collapse: collapse; text-align: center; } 
@@ -234,21 +201,19 @@
         tr:hover td { background-color: #f8fafc; }
         .text-profit { color: #10b981; font-family: 'Inter', monospace;} .text-loss { color: #dc2626; font-family: 'Inter', monospace;}
         
-        input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0;}
-        
-        /* 💡 修复：挂载状态呼吸灯 */
         .status-dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; } 
-        .dot-green { background-color:#10b981; animation: breathe-green 2s infinite; } 
+        .dot-green { background-color:#10b981; animation: pulse-green 2s infinite; } 
         .dot-yellow { background-color:#f59e0b; }
-        @keyframes breathe-green { 0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); } 70% { box-shadow: 0 0 0 6px rgba(16,185,129,0); } 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); } }
+        @keyframes pulse-green { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16,185,129,0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16,185,129,0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16,185,129,0); } }
         
-        /* 查表复制区 */
-        #csvPasteArea { width: 100%; height: 120px; border: 1px dashed var(--border-active); border-radius: 6px; padding: 1rem; font-size: 0.85rem; font-family: monospace; color: var(--text-main); background: #f8fafc; resize: vertical; margin-bottom: 1rem; outline: none; transition: all 0.2s ease;}
+        #csvPasteArea { width: 100%; height: 120px; border: 1px dashed var(--border-active); border-radius: 12px; padding: 1rem; font-size: 0.85rem; font-family: monospace; color: var(--text-main); background: #f8fafc; resize: vertical; margin-bottom: 1rem; outline: none; transition: all 0.2s ease;}
         #csvPasteArea:focus { border-color: var(--color-ozon); background: #fff; box-shadow: 0 0 0 3px rgba(0, 91, 255, 0.15); border-style: solid;}
         
-        /* 柔和过渡动画 */
         .fade-in { animation: fadeIn 0.3s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* 模态框圆角 */
+        #pasteModal { border-radius: 16px; }
     </style>
 </head>
 <body>
@@ -298,242 +263,249 @@
     <div id="detailView" style="display: none;" class="fade-in">
         
         <div class="action-bar">
-            <button class="btn btn-outline" onclick="showDashboard()">返回大厅</button>
             <div style="display: flex; gap: 0.8rem; align-items: center;">
+                <button class="btn btn-outline" onclick="showDashboard()">返回大厅</button>
                 <span id="currentPlatBadge" class="plat-tag tag-wb">WB</span>
                 <input type="text" class="sku-input" id="skuName" placeholder="录入 SKU 或品名...">
                 <button class="btn btn-primary" onclick="saveProduct()">保存方案</button>
             </div>
-            <div class="template-group">
-                <div class="select-wrapper" style="width: 150px;"><select id="templateSelect"><option value="">-- 通用参数模板 --</option></select></div>
-                <button class="btn-icon" style="color:var(--color-indigo-500)" onclick="applyTemplate()" title="应用选中的模板">应用</button>
-                <button class="btn-icon" style="color:var(--color-amber-500)" onclick="saveAsTemplate()" title="将当前参数存为新模板">存为模板</button>
-                <button class="btn-icon" style="color:var(--color-red-600)" onclick="deleteTemplate()" title="删除该模板">删除</button>
+            <div style="display: flex; gap: 0.8rem; align-items: center;">
+                <button class="btn btn-outline" style="color: #4f46e5; border-color: #c7d2fe;" onclick="copyToClipboard(this)">
+                    📸 一键复制长截图
+                </button>
+                <div class="template-group">
+                    <div class="select-wrapper" style="width: 130px;"><select id="templateSelect"><option value="">-- 参数模板 --</option></select></div>
+                    <button class="btn-icon" style="color:var(--color-indigo-500)" onclick="applyTemplate()" title="应用">应用</button>
+                    <button class="btn-icon" style="color:var(--color-amber-500)" onclick="saveAsTemplate()" title="存为模板">存</button>
+                    <button class="btn-icon" style="color:var(--color-red-600)" onclick="deleteTemplate()" title="删除模板">删</button>
+                </div>
             </div>
         </div>
 
-        <div class="detail-grid">
-            <div class="col-left">
-                <div class="card" id="module-1">
-                    <h2 class="card-title"><div class="card-title-indicator bg-indigo"></div>产品基础信息</h2>
-                    <div class="input-row">
-                        <div class="input-group"><label>产品成本 (RMB)</label><div class="input-wrapper"><span class="symbol">¥</span><input type="number" id="productCost" placeholder="0" oninput="calculateAll()"></div></div>
-                        <div class="input-group"><label>汇率 (RUB/RMB)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="exchangeRate" placeholder="12.5" oninput="calculateAll()"></div></div>
-                        <div class="combo-group"><label>尺寸 (长 × 宽 × 高 cm)</label><div class="combo-inputs"><input type="number" id="length" placeholder="0" oninput="calculateAll()"><span class="multiply-sign">×</span><input type="number" id="width" placeholder="0" oninput="calculateAll()"><span class="multiply-sign">×</span><input type="number" id="height" placeholder="0" oninput="calculateAll()"></div></div>
-                    </div>
-                    <div class="result-row">
-                        <div class="result-box res-tint-gray res-small text-left-input"><label>产品体积 (L)</label><div class="input-wrapper"><input type="text" id="volume" readonly placeholder="0.00"></div></div>
-                        <div class="result-box res-tint-blue res-small text-left-input" style="flex:1;"><label>折算单位成本 (RUB)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="unitCost" readonly placeholder="0"></div></div>
-                    </div>
-                </div>
-
-                <div class="card" id="module-3">
-                    <h2 class="card-title"><div class="card-title-indicator bg-amber"></div>本土税收板块</h2>
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label>税制方案</label>
-                            <div class="select-wrapper">
-                                <select id="taxSystem" onchange="calculateAll()">
-                                    <option value="t1">销售税 6% (УСН «Доходы»)</option>
-                                    <option value="t2">所得税 15% (УСН «Доходы минус расходы»)</option>
-                                    <option value="t3">销售税 7% + 5% НДС</option>
-                                    <option value="t4">所得税 15% + 5% НДС</option>
-                                    <option value="t5">不交纳税务 (Без налогов)</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-row">
-                        <div class="input-group"><label>基础税率</label><div class="input-wrapper"><input type="text" id="taxRateDisp" readonly placeholder="6"><span class="symbol">%</span></div></div>
-                        <div class="input-group"><label>附加增值税率 (НДС)</label><div class="input-wrapper"><input type="text" id="vatRateDisp" readonly placeholder="0"><span class="symbol">%</span></div></div>
-                    </div>
-                    <div class="result-row">
-                        <div class="result-box res-tint-amber text-left-input"><label>预估核算税额 (RUB)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="taxRub" readonly placeholder="0"></div></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-right">
-                
-                <div id="wb-right-engine">
-                    <div class="card" id="wb-module-2">
-                        <h2 class="card-title"><div class="card-title-indicator bg-emerald"></div>WB 平台费用板块</h2>
+        <div id="captureArea" style="padding: 10px; margin: -10px; border-radius: 20px;">
+            <div class="detail-grid">
+                <div class="col-left">
+                    <div class="card" id="module-1">
+                        <h2 class="card-title"><div class="card-title-indicator bg-indigo"></div>产品基础信息</h2>
                         <div class="input-row">
-                            <div class="input-group"><label>定价 (RUB)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="wb_price" placeholder="0" oninput="calculateAll()"></div></div>
-                            <div class="input-group"><label>WB折扣</label><div class="input-wrapper"><input type="number" id="wb_discount" placeholder="0" oninput="calculateAll()"><span class="symbol">%</span></div></div>
-                            <div class="input-group"><label>佣金费率</label><div class="input-wrapper"><input type="number" id="wb_commissionRate" placeholder="0" oninput="calculateAll()"><span class="symbol">%</span></div></div>
+                            <div class="input-group"><label>产品成本 (RMB)</label><div class="input-wrapper"><span class="symbol">¥</span><input type="number" id="productCost" placeholder="0" oninput="calculateAll()"></div></div>
+                            <div class="input-group"><label>汇率 (RUB/RMB)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="exchangeRate" placeholder="12.5" oninput="calculateAll()"></div></div>
+                            <div class="combo-group"><label>尺寸 (长 × 宽 × 高 cm)</label><div class="combo-inputs"><input type="number" id="length" placeholder="0" oninput="calculateAll()"><span class="multiply-sign">×</span><input type="number" id="width" placeholder="0" oninput="calculateAll()"><span class="multiply-sign">×</span><input type="number" id="height" placeholder="0" oninput="calculateAll()"></div></div>
                         </div>
                         <div class="result-row">
-                            <div class="result-box res-tint-blue res-small text-left-input"><label>买家到手价</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="wb_buyerPrice" readonly placeholder="0"></div></div>
-                            <div class="result-box res-tint-red res-small text-left-input"><label>佣金扣除</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="wb_commissionFee" readonly placeholder="0"></div></div>
-                            <div class="result-box res-tint-amber res-small text-left-input"><label>收单费 (1.5%)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="wb_bankFee" readonly placeholder="0"></div></div>
+                            <div class="result-box res-tint-gray res-small text-left-input"><label>产品体积 (L)</label><div class="input-wrapper"><div id="volume" class="value-display">0.00</div></div></div>
+                            <div class="result-box res-tint-blue res-small text-left-input" style="flex:1;"><label>折算单位成本 (RUB)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="unitCost" class="value-display">0</div></div></div>
                         </div>
-                        
-                        <div class="sub-module-title">WB 配送费用明细</div>
+                    </div>
+
+                    <div class="card" id="module-3">
+                        <h2 class="card-title"><div class="card-title-indicator bg-amber"></div>本土税收板块</h2>
                         <div class="input-row">
-                            <div class="input-group"><label>发货方案</label><div class="select-wrapper"><select id="wb_shippingMethod" onchange="calculateAll()"><option value="FBS">FBS</option><option value="FBW">FBW</option></select></div></div>
                             <div class="input-group">
-                                <label>本地化指数</label>
+                                <label>税制方案</label>
                                 <div class="select-wrapper">
-                                    <select id="wb_locIndex" onchange="calculateAll()">
-                                        <option value="95-100">95-100</option><option value="90-94">90-94</option><option value="85-89">85-89</option><option value="80-84">80-84</option>
-                                        <option value="75-79">75-79</option><option value="70-74">70-74</option><option value="65-69">65-69</option><option value="60-64">60-64</option>
-                                        <option value="55-59">55-59</option><option value="50-54">50-54</option><option value="45-49">45-49</option><option value="40-44">40-44</option>
-                                        <option value="35-39">35-39</option><option value="30-34">30-34</option><option value="25-29">25-29</option><option value="20-24">20-24</option>
-                                        <option value="15-19">15-19</option><option value="10-14">10-14</option><option value="5-9">5-9</option><option value="0-4">0-4</option><option value="none">不计算</option>
+                                    <select id="taxSystem" onchange="calculateAll()">
+                                        <option value="t1">销售税 6% (УСН «Доходы»)</option>
+                                        <option value="t2">所得税 15% (УСН «Доходы минус расходы»)</option>
+                                        <option value="t3">销售税 7% + 5% НДС</option>
+                                        <option value="t4">所得税 15% + 5% НДС</option>
+                                        <option value="t5">不交纳税务 (Без налогов)</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="input-group"><label>КРП</label><div class="input-wrapper"><input type="text" id="wb_krpRatio" readonly style="color:#10b981;"><span class="symbol" style="color:#10b981;">%</span></div></div>
                         </div>
                         <div class="input-row">
-                            <div class="input-group"><label>基本费</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="wb_baseRate" placeholder="0" oninput="calculateAll()"></div></div>
-                            <div class="input-group"><label>超1L费</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="wb_over1LRate" placeholder="0" oninput="calculateAll()"></div></div>
-                            <div class="input-group"><label>FBW倍率</label><div class="input-wrapper"><input type="number" id="wb_fbwMultiplier" placeholder="1.0" oninput="calculateAll()"><span class="symbol">x</span></div></div>
-                            <div class="input-group"><label>签收率</label><div class="input-wrapper"><input type="number" id="wb_deliveryRate" placeholder="100" oninput="calculateAll()"><span class="symbol">%</span></div></div>
+                            <div class="input-group"><label>基础税率</label><div class="input-wrapper"><div id="taxRateDisp" class="value-readonly">6</div><span class="symbol">%</span></div></div>
+                            <div class="input-group"><label>附加增值税率 (НДС)</label><div class="input-wrapper"><div id="vatRateDisp" class="value-readonly">0</div><span class="symbol">%</span></div></div>
                         </div>
                         <div class="result-row">
-                            <div class="result-box res-tint-teal res-small text-left-input"><label>去程分拣</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="wb_logisticsFee" readonly placeholder="0"></div></div>
-                            <div class="result-box res-tint-teal res-small text-left-input"><label>全程配送</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="wb_totalJourney" readonly placeholder="0"></div></div>
-                            <div class="result-box res-tint-teal res-small text-left-input"><label>逆向处理</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="wb_reverseFee" readonly placeholder="0"></div></div>
-                        </div>
-                        <div class="result-row">
-                            <div class="result-box res-tint-blue res-small text-left-input"><label>物流总资费 (按概率均摊)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="wb_totalLogisticsCost" readonly placeholder="0"></div></div>
-                            <div class="result-box res-tint-gray res-small text-left-input"><label>物流占收入比</label><div class="input-wrapper"><input type="text" id="wb_logRatio" readonly placeholder="0.00"><span class="symbol">%</span></div></div>
-                        </div>
-                        
-                        <div class="sub-module-title">WB 杂项与仓储费用</div>
-                        <div class="input-row">
-                            <div class="input-group"><label>广告其它</label><div class="input-wrapper"><input type="number" id="wb_adRate" placeholder="0.0" oninput="calculateAll()"><span class="symbol">%</span></div></div>
-                            <div class="input-group"><label>仓储 每L/天</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="wb_storagePerL" placeholder="0.00" oninput="calculateAll()"></div></div>
-                        </div>
-                        <div class="result-row">
-                            <div class="result-box res-tint-amber res-small text-left-input"><label>广告其它费</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="wb_adFee" readonly placeholder="0"></div></div>
-                            <div class="result-box res-tint-amber res-small text-left-input"><label>无法均摊 (1%)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="wb_unallocatedFee" readonly placeholder="0"></div></div>
-                            <div class="result-box res-tint-amber res-small text-left-input"><label>FBW存储 (30天)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="wb_fbwStorageFee" readonly placeholder="0"></div></div>
-                        </div>
-                        
-                        <div class="result-row" style="margin-top:1.5rem;">
-                            <div class="result-box res-solid-red text-left-input" style="padding:1.25rem;"><label style="font-size:1rem;">WB 平台总扣费 (RUB)</label><div class="input-wrapper"><span class="symbol" style="font-size:1.5rem;">₽</span><input type="text" id="wb_wbTotalDeduction" readonly placeholder="0" style="font-size:2.25rem;"></div></div>
-                            <div class="result-box res-solid-red text-left-input" style="padding:1.25rem; flex: 0.5;"><label style="font-size:1rem;">平台扣费占比</label><div class="input-wrapper"><input type="text" id="wb_wbDeductionRatio" readonly placeholder="0.00" style="font-size: 1.8rem;"><span class="symbol" style="font-size: 1.25rem;">%</span></div></div>
+                            <div class="result-box res-tint-amber text-left-input"><label>预估核算税额 (RUB)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="taxRub" class="value-display">0</div></div></div>
                         </div>
                     </div>
                 </div>
 
-                <div id="ozon-right-engine" style="display: none;">
-                    <div class="card" id="ozon-module-2">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;">
-                            <h2 class="card-title" style="margin:0;"><div class="card-title-indicator bg-ozon"></div>Ozon 平台费用板块</h2>
-                            <div style="text-align: right;">
-                                <button class="btn btn-outline" style="font-size: 0.85rem; padding: 0.5rem 1rem; color: var(--color-ozon); border-color: #bfdbfe;" onclick="document.getElementById('pasteModal').style.display='block'">配置官方查表字典</button>
-                                <div id="ozonDbStatus" style="font-size: 0.8rem; color: #f59e0b; margin-top: 0.5rem; font-weight: 600; display: flex; align-items: center; justify-content: flex-end;">
-                                    <span class="status-dot dot-yellow"></span>未导入 (当前使用系统底线估算)
+                <div class="col-right">
+                    
+                    <div id="wb-right-engine">
+                        <div class="card" id="wb-module-2">
+                            <h2 class="card-title"><div class="card-title-indicator bg-emerald"></div>WB 平台费用板块</h2>
+                            <div class="input-row">
+                                <div class="input-group"><label>定价 (RUB)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="wb_price" placeholder="0" oninput="calculateAll()"></div></div>
+                                <div class="input-group"><label>WB折扣</label><div class="input-wrapper"><input type="number" id="wb_discount" placeholder="0" oninput="calculateAll()"><span class="symbol">%</span></div></div>
+                                <div class="input-group"><label>佣金费率</label><div class="input-wrapper"><input type="number" id="wb_commissionRate" placeholder="0" oninput="calculateAll()"><span class="symbol">%</span></div></div>
+                            </div>
+                            <div class="result-row">
+                                <div class="result-box res-tint-blue res-small text-left-input"><label>买家到手价</label><div class="input-wrapper"><span class="symbol">₽</span><div id="wb_buyerPrice" class="value-display">0</div></div></div>
+                                <div class="result-box res-tint-red res-small text-left-input"><label>佣金扣除</label><div class="input-wrapper"><span class="symbol">₽</span><div id="wb_commissionFee" class="value-display">0</div></div></div>
+                                <div class="result-box res-tint-amber res-small text-left-input"><label>收单费 (1.5%)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="wb_bankFee" class="value-display">0</div></div></div>
+                            </div>
+                            
+                            <div class="sub-module-title">WB 配送费用明细</div>
+                            <div class="input-row">
+                                <div class="input-group"><label>发货方案</label><div class="select-wrapper"><select id="wb_shippingMethod" onchange="calculateAll()"><option value="FBS">FBS</option><option value="FBW">FBW</option></select></div></div>
+                                <div class="input-group">
+                                    <label>本地化指数</label>
+                                    <div class="select-wrapper">
+                                        <select id="wb_locIndex" onchange="calculateAll()">
+                                            <option value="95-100">95-100</option><option value="90-94">90-94</option><option value="85-89">85-89</option><option value="80-84">80-84</option>
+                                            <option value="75-79">75-79</option><option value="70-74">70-74</option><option value="65-69">65-69</option><option value="60-64">60-64</option>
+                                            <option value="55-59">55-59</option><option value="50-54">50-54</option><option value="45-49">45-49</option><option value="40-44">40-44</option>
+                                            <option value="35-39">35-39</option><option value="30-34">30-34</option><option value="25-29">25-29</option><option value="20-24">20-24</option>
+                                            <option value="15-19">15-19</option><option value="10-14">10-14</option><option value="5-9">5-9</option><option value="0-4">0-4</option><option value="none">不计算</option>
+                                        </select>
+                                    </div>
                                 </div>
+                                <div class="input-group"><label>КРП</label><div class="input-wrapper"><div id="wb_krpRatio" class="value-readonly" style="color:#10b981;">0</div><span class="symbol" style="color:#10b981;">%</span></div></div>
+                            </div>
+                            <div class="input-row">
+                                <div class="input-group"><label>基本费</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="wb_baseRate" placeholder="0" oninput="calculateAll()"></div></div>
+                                <div class="input-group"><label>超1L费</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="wb_over1LRate" placeholder="0" oninput="calculateAll()"></div></div>
+                                <div class="input-group"><label>FBW倍率</label><div class="input-wrapper"><input type="number" id="wb_fbwMultiplier" placeholder="1.0" oninput="calculateAll()"><span class="symbol">x</span></div></div>
+                                <div class="input-group"><label>签收率</label><div class="input-wrapper"><input type="number" id="wb_deliveryRate" placeholder="100" oninput="calculateAll()"><span class="symbol">%</span></div></div>
+                            </div>
+                            <div class="result-row">
+                                <div class="result-box res-tint-teal res-small text-left-input"><label>去程分拣</label><div class="input-wrapper"><span class="symbol">₽</span><div id="wb_logisticsFee" class="value-display">0</div></div></div>
+                                <div class="result-box res-tint-teal res-small text-left-input"><label>全程配送</label><div class="input-wrapper"><span class="symbol">₽</span><div id="wb_totalJourney" class="value-display">0</div></div></div>
+                                <div class="result-box res-tint-teal res-small text-left-input"><label>逆向处理</label><div class="input-wrapper"><span class="symbol">₽</span><div id="wb_reverseFee" class="value-display">0</div></div></div>
+                            </div>
+                            <div class="result-row">
+                                <div class="result-box res-tint-blue res-small text-left-input"><label>物流总资费 (按概率均摊)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="wb_totalLogisticsCost" class="value-display">0</div></div></div>
+                                <div class="result-box res-tint-gray res-small text-left-input"><label>物流占收入比</label><div class="input-wrapper"><div id="wb_logRatio" class="value-display">0.00</div><span class="symbol">%</span></div></div>
+                            </div>
+                            
+                            <div class="sub-module-title">WB 杂项与仓储费用</div>
+                            <div class="input-row">
+                                <div class="input-group"><label>广告其它</label><div class="input-wrapper"><input type="number" id="wb_adRate" placeholder="0.0" oninput="calculateAll()"><span class="symbol">%</span></div></div>
+                                <div class="input-group"><label>仓储 每L/天</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="wb_storagePerL" placeholder="0.00" oninput="calculateAll()"></div></div>
+                            </div>
+                            <div class="result-row">
+                                <div class="result-box res-tint-amber res-small text-left-input"><label>广告其它费</label><div class="input-wrapper"><span class="symbol">₽</span><div id="wb_adFee" class="value-display">0</div></div></div>
+                                <div class="result-box res-tint-amber res-small text-left-input"><label>无法均摊 (1%)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="wb_unallocatedFee" class="value-display">0</div></div></div>
+                                <div class="result-box res-tint-amber res-small text-left-input"><label>FBW仓租 (30天)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="wb_fbwStorageFee" class="value-display">0</div></div></div>
+                            </div>
+                            
+                            <div class="result-row" style="margin-top:1.5rem;">
+                                <div class="result-box res-solid-red text-left-input" style="padding:1.25rem;"><label style="font-size:1rem;">WB 平台总扣费 (RUB)</label><div class="input-wrapper"><span class="symbol" style="font-size:1.5rem;">₽</span><div id="wb_wbTotalDeduction" class="value-display">0</div></div></div>
+                                <div class="result-box res-solid-red text-left-input" style="padding:1.25rem; flex: 0.5;"><label style="font-size:1rem;">平台扣费占比</label><div class="input-wrapper"><div id="wb_wbDeductionRatio" class="value-display">0.00</div><span class="symbol" style="font-size: 1.25rem;">%</span></div></div>
                             </div>
                         </div>
-                        
-                        <div id="pasteModal" style="display:none; background: #ffffff; border: 1px solid var(--color-ozon); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; position: relative; box-shadow: 0 4px 15px rgba(0, 91, 255, 0.1);">
-                            <button style="position: absolute; right: 15px; top: 15px; background:transparent; border:none; font-size:1.2rem; cursor:pointer; color:#94a3b8;" onclick="document.getElementById('pasteModal').style.display='none'">✕</button>
-                            <label style="font-weight: 700; color: var(--text-main); display:block; margin-bottom: 0.5rem; font-size: 1rem;">粘贴 Ozon 数据源</label>
-                            <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem; line-height: 1.5;">请在 Ozon《Логистика РФ》Excel 文件中，按 <b>Ctrl+A</b> 全选单元格内容，并将其粘贴到下方文本框内。</p>
-                            <textarea id="csvPasteArea" placeholder="在此处粘贴 Excel 单元格内容..."></textarea>
-                            <button class="btn btn-primary" style="width: 100%; background-color: var(--color-ozon);" onclick="parsePastedExcel()">解析并构建本地数据字典</button>
-                        </div>
-                        
-                        <div class="input-row">
-                            <div class="input-group"><label>定价 (RUB)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="ozon_price" placeholder="0" oninput="calculateAll()"></div></div>
-                            <div class="input-group"><label>Ozon平台折扣</label><div class="input-wrapper"><input type="number" id="ozon_discount" placeholder="0" oninput="calculateAll()"><span class="symbol">%</span></div></div>
-                            <div class="input-group"><label>佣金费率</label><div class="input-wrapper"><input type="number" id="ozon_commissionRate" placeholder="0" oninput="calculateAll()"><span class="symbol">%</span></div></div>
-                        </div>
-                        <div class="result-row">
-                            <div class="result-box res-tint-blue res-small text-left-input"><label>买家到手价</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="ozon_buyerPrice" readonly placeholder="0"></div></div>
-                            <div class="result-box res-tint-red res-small text-left-input"><label>佣金扣除</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="ozon_commissionFee" readonly placeholder="0"></div></div>
-                            <div class="result-box res-tint-amber res-small text-left-input"><label>收单费 (1.5%)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="ozon_bankFee" readonly placeholder="0"></div></div>
-                        </div>
-                        
-                        <div class="sub-module-title">Ozon 矩阵物流明细</div>
-                        <div class="input-row">
-                            <div class="input-group"><label>发货方案</label><div class="select-wrapper"><select id="ozon_shippingMethod" onchange="calculateAll()"><option value="FBO">FBO</option><option value="FBS">FBS</option></select></div></div>
-                            <div class="input-group"><label>签收率</label><div class="input-wrapper"><input type="number" id="ozon_deliveryRate" placeholder="100" oninput="calculateAll()"><span class="symbol">%</span></div></div>
-                        </div>
-                        <div class="input-row">
-                            <div class="input-group" style="min-width: 250px;">
-                                <label>发货集群 (Кластер отправления)</label>
-                                <div class="select-wrapper">
-                                    <select id="ozon_fromCluster" onchange="calculateAll()">
-                                        <option value="Азербайджан">Азербайджан</option><option value="Алматы">Алматы</option><option value="Армения">Армения</option><option value="Астана">Астана</option><option value="Беларусь">Беларусь</option><option value="Воронеж">Воронеж</option><option value="Грузия">Грузия</option><option value="Дальний Восток">Дальний Восток</option><option value="Екатеринбург">Екатеринбург</option><option value="Казань">Казань</option><option value="Калининград">Калининград</option><option value="Краснодар">Краснодар</option><option value="Красноярск">Красноярск</option><option value="Кыргызстан">Кыргызстан</option><option value="Махачкала">Махачкала</option><option value="Москва, МО и Дальние регионы">Москва, МО и Дальние регионы</option><option value="Невинномысск">Невинномысск</option><option value="Новосибирск">Новосибирск</option><option value="Омск">Омск</option><option value="Оренбург">Оренбург</option><option value="Пермь">Пермь</option><option value="Ростов">Ростов</option><option value="Самара">Самара</option><option value="Санкт-Петербург и СЗО">Санкт-Петербург и СЗО</option><option value="Саратов">Саратов</option><option value="Тверь">Тверь</option><option value="Туркменистан">Туркменистан</option><option value="Тюмень">Тюмень</option><option value="Узбекистан">Узбекистан</option><option value="Уфа">Уфа</option><option value="Ярославль">Ярославль</option>
-                                    </select>
+                    </div>
+
+                    <div id="ozon-right-engine" style="display: none;">
+                        <div class="card" id="ozon-module-2">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem; position: relative; z-index: 2;">
+                                <h2 class="card-title" style="margin:0;"><div class="card-title-indicator bg-ozon"></div>Ozon 平台费用板块</h2>
+                                <div style="text-align: right;">
+                                    <button class="btn btn-outline" style="font-size: 0.85rem; padding: 0.5rem 1rem; color: var(--color-ozon); border-color: #bfdbfe;" onclick="document.getElementById('pasteModal').style.display='block'">配置官方查表字典</button>
+                                    <div id="ozonDbStatus" style="font-size: 0.8rem; color: #f59e0b; margin-top: 0.5rem; font-weight: 600; display: flex; align-items: center; justify-content: flex-end;">
+                                        <span class="status-dot dot-yellow"></span>未导入 (当前使用底线估算)
+                                    </div>
                                 </div>
                             </div>
-                            <div class="input-group" style="min-width: 250px;">
-                                <label>收货集群 (Кластер доставки)</label>
-                                <div class="select-wrapper">
-                                    <select id="ozon_toCluster" onchange="calculateAll()">
-                                        <option value="Азербайджан">Азербайджан</option><option value="Алматы">Алматы</option><option value="Армения">Армения</option><option value="Астана">Астана</option><option value="Беларусь">Беларусь</option><option value="Воронеж">Воронеж</option><option value="Грузия">Грузия</option><option value="Дальний Восток">Дальний Восток</option><option value="Екатеринбург">Екатеринбург</option><option value="Казань">Казань</option><option value="Калининград">Калининград</option><option value="Краснодар">Краснодар</option><option value="Красноярск">Красноярск</option><option value="Кыргызстан">Кыргызстан</option><option value="Махачкала">Махачкала</option><option value="Москва, МО и Дальние регионы">Москва, МО и Дальние регионы</option><option value="Невинномысск">Невинномысск</option><option value="Новосибирск">Новосибирск</option><option value="Омск">Омск</option><option value="Оренбург">Оренбург</option><option value="Пермь">Пермь</option><option value="Ростов">Ростов</option><option value="Самара">Самара</option><option value="Санкт-Петербург и СЗО">Санкт-Петербург и СЗО</option><option value="Саратов">Саратов</option><option value="Тверь">Тверь</option><option value="Туркменистан">Туркменистан</option><option value="Тюмень">Тюмень</option><option value="Узбекистан">Узбекистан</option><option value="Уфа">Уфа</option><option value="Ярославль">Ярославль</option>
-                                    </select>
+                            
+                            <div id="pasteModal" style="display:none; background: #ffffff; border: 1px solid var(--color-ozon); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; position: relative; box-shadow: 0 4px 15px rgba(0, 91, 255, 0.1); z-index: 10;">
+                                <button style="position: absolute; right: 15px; top: 15px; background:transparent; border:none; font-size:1.2rem; cursor:pointer; color:#94a3b8;" onclick="document.getElementById('pasteModal').style.display='none'">✕</button>
+                                <label style="font-weight: 700; color: var(--text-main); display:block; margin-bottom: 0.5rem; font-size: 1rem;">粘贴 Ozon 数据源</label>
+                                <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem; line-height: 1.5;">请在 Ozon《Логистика РФ》Excel 文件中，按 <b>Ctrl+A</b> 全选单元格内容，并将其粘贴到下方文本框内。</p>
+                                <textarea id="csvPasteArea" placeholder="在此处粘贴 Excel 单元格内容..."></textarea>
+                                <button class="btn btn-primary" style="width: 100%; background-color: var(--color-ozon);" onclick="_P_E()">解析并构建本地数据字典</button>
+                            </div>
+                            
+                            <div class="input-row">
+                                <div class="input-group"><label>定价 (RUB)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="ozon_price" placeholder="0" oninput="calculateAll()"></div></div>
+                                <div class="input-group"><label>Ozon平台折扣</label><div class="input-wrapper"><input type="number" id="ozon_discount" placeholder="0" oninput="calculateAll()"><span class="symbol">%</span></div></div>
+                                <div class="input-group"><label>佣金费率</label><div class="input-wrapper"><input type="number" id="ozon_commissionRate" placeholder="0" oninput="calculateAll()"><span class="symbol">%</span></div></div>
+                            </div>
+                            <div class="result-row">
+                                <div class="result-box res-tint-blue res-small text-left-input"><label>买家到手价</label><div class="input-wrapper"><span class="symbol">₽</span><div id="ozon_buyerPrice" class="value-display">0</div></div></div>
+                                <div class="result-box res-tint-red res-small text-left-input"><label>佣金扣除</label><div class="input-wrapper"><span class="symbol">₽</span><div id="ozon_commissionFee" class="value-display">0</div></div></div>
+                                <div class="result-box res-tint-amber res-small text-left-input"><label>收单费 (1.5%)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="ozon_bankFee" class="value-display">0</div></div></div>
+                            </div>
+                            
+                            <div class="sub-module-title">Ozon 矩阵物流明细</div>
+                            <div class="input-row">
+                                <div class="input-group"><label>发货方案</label><div class="select-wrapper"><select id="ozon_shippingMethod" onchange="calculateAll()"><option value="FBO">FBO</option><option value="FBS">FBS</option></select></div></div>
+                                <div class="input-group"><label>签收率</label><div class="input-wrapper"><input type="number" id="ozon_deliveryRate" placeholder="100" oninput="calculateAll()"><span class="symbol">%</span></div></div>
+                            </div>
+                            <div class="input-row">
+                                <div class="input-group" style="min-width: 250px;">
+                                    <label>发货集群 (Отправления)</label>
+                                    <div class="select-wrapper">
+                                        <select id="ozon_fromCluster" onchange="calculateAll()">
+                                            <option value="Азербайджан">Азербайджан</option><option value="Алматы">Алматы</option><option value="Армения">Армения</option><option value="Астана">Астана</option><option value="Беларусь">Беларусь</option><option value="Воронеж">Воронеж</option><option value="Грузия">Грузия</option><option value="Дальний Восток">Дальний Восток</option><option value="Екатеринбург">Екатеринбург</option><option value="Казань">Казань</option><option value="Калининград">Калининград</option><option value="Краснодар">Краснодар</option><option value="Красноярск">Красноярск</option><option value="Кыргызстан">Кыргызстан</option><option value="Махачкала">Махачкала</option><option value="Москва, МО и Дальние регионы">Москва, МО и Дальние регионы</option><option value="Невинномысск">Невинномысск</option><option value="Новосибирск">Новосибирск</option><option value="Омск">Омск</option><option value="Оренбург">Оренбург</option><option value="Пермь">Пермь</option><option value="Ростов">Ростов</option><option value="Самара">Самара</option><option value="Санкт-Петербург и СЗО">Санкт-Петербург и СЗО</option><option value="Саратов">Саратов</option><option value="Тверь">Тверь</option><option value="Туркменистан">Туркменистан</option><option value="Тюмень">Тюмень</option><option value="Узбекистан">Узбекистан</option><option value="Уфа">Уфа</option><option value="Ярославль">Ярославль</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="input-group" style="min-width: 250px;">
+                                    <label>收货集群 (Доставки)</label>
+                                    <div class="select-wrapper">
+                                        <select id="ozon_toCluster" onchange="calculateAll()">
+                                            <option value="Азербайджан">Азербайджан</option><option value="Алматы">Алматы</option><option value="Армения">Армения</option><option value="Астана">Астана</option><option value="Беларусь">Беларусь</option><option value="Воронеж">Воронеж</option><option value="Грузия">Грузия</option><option value="Дальний Восток">Дальний Восток</option><option value="Екатеринбург">Екатеринбург</option><option value="Казань">Казань</option><option value="Калининград">Калининград</option><option value="Краснодар">Краснодар</option><option value="Красноярск">Красноярск</option><option value="Кыргызстан">Кыргызстан</option><option value="Махачкала">Махачкала</option><option value="Москва, МО и Дальние регионы">Москва, МО и Дальние регионы</option><option value="Невинномысск">Невинномысск</option><option value="Новосибирск">Новосибирск</option><option value="Омск">Омск</option><option value="Оренбург">Оренбург</option><option value="Пермь">Пермь</option><option value="Ростов">Ростов</option><option value="Самара">Самара</option><option value="Санкт-Петербург и СЗО">Санкт-Петербург и СЗО</option><option value="Саратов">Саратов</option><option value="Тверь">Тверь</option><option value="Туркменистан">Туркменистан</option><option value="Тюмень">Тюмень</option><option value="Узбекистан">Узбекистан</option><option value="Уфа">Уфа</option><option value="Ярославль">Ярославль</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="input-row">
-                            <div class="input-group"><label>最后一公里费</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="ozon_lastMile" placeholder="0" oninput="calculateAll()"></div></div>
-                            <div class="input-group" id="ozon_processing_container" style="transition: all 0.2s ease;"><label>包裹处理费 (FBS)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="ozon_processing" placeholder="0" oninput="calculateAll()"></div></div>
-                            <div class="input-group"><label>退货处理费</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="ozon_returnProcessing" placeholder="0" oninput="calculateAll()"></div></div>
-                        </div>
-                        <div class="result-row" style="background:#f8fafc; border-radius:0.75rem; padding: 1rem 1.25rem; margin-top:0.5rem; border: 1px solid var(--border-light);">
-                            <div class="result-box text-left-input" style="padding:0; background:transparent; border:none;" id="ozon_fwdSort_container"><label>去程分拣 (查表)</label><div class="input-wrapper"><span class="symbol" style="color:#475569;">₽</span><input type="text" id="ozon_fwdSort" readonly placeholder="0" style="color:#0f172a;"></div></div>
-                            <div class="result-box text-left-input" style="padding:0; background:transparent; border:none;" id="ozon_crossMarkup_container" style="transition: all 0.2s ease;"><label>非本地加价 (FBO)</label><div class="input-wrapper"><span class="symbol" style="color:#475569;">₽</span><input type="text" id="ozon_crossMarkup" readonly placeholder="0" style="color:#0f172a;"></div></div>
-                            <div class="result-box res-tint-teal res-small" style="margin-left:auto;"><label>正向·全程配送</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="ozon_forwardTotal" readonly placeholder="0"></div></div>
-                            <div class="result-box res-tint-red res-small"><label>逆向·退回仓</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="ozon_reverseTotal" readonly placeholder="0"></div></div>
-                        </div>
-                        <div class="result-row">
-                            <div class="result-box res-tint-blue res-small text-left-input"><label>物流总资费 (按概率均摊)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="ozon_totalLogisticsCost" readonly placeholder="0"></div></div>
-                            <div class="result-box res-tint-gray res-small text-left-input"><label>物流占收入比</label><div class="input-wrapper"><input type="text" id="ozon_logRatio" readonly placeholder="0.00"><span class="symbol">%</span></div></div>
-                        </div>
-                        
-                        <div class="sub-module-title">Ozon 杂项与仓储费用</div>
-                        <div class="input-row">
-                            <div class="input-group"><label>广告其它</label><div class="input-wrapper"><input type="number" id="ozon_adRate" placeholder="0.0" oninput="calculateAll()"><span class="symbol">%</span></div></div>
-                            <div class="input-group"><label>仓储 每L/天</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="ozon_storagePerL" placeholder="0.00" oninput="calculateAll()"></div></div>
-                        </div>
-                        <div class="result-row">
-                            <div class="result-box res-tint-amber res-small text-left-input"><label>广告其它费</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="ozon_adFee" readonly placeholder="0"></div></div>
-                            <div class="result-box res-tint-amber res-small text-left-input"><label>无法均摊 (1%)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="ozon_unallocatedFee" readonly placeholder="0"></div></div>
-                            <div class="result-box res-tint-amber res-small text-left-input"><label>FBO存储 (30天)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="ozon_fboStorageFee" readonly placeholder="0"></div></div>
-                        </div>
-                        <div class="result-row" style="margin-top:1.5rem;">
-                            <div class="result-box res-solid-red text-left-input" style="padding:1.25rem;"><label style="font-size:1rem;">Ozon 平台总扣费 (RUB)</label><div class="input-wrapper"><span class="symbol" style="font-size:1.5rem;">₽</span><input type="text" id="ozon_wbTotalDeduction" readonly placeholder="0" style="font-size:2.25rem;"></div></div>
-                            <div class="result-box res-solid-red text-left-input" style="padding:1.25rem; flex: 0.5;"><label style="font-size:1rem;">平台扣费占比</label><div class="input-wrapper"><input type="text" id="ozon_wbDeductionRatio" readonly placeholder="0.00" style="font-size: 1.8rem;"><span class="symbol" style="font-size: 1.25rem;">%</span></div></div>
+                            <div class="input-row">
+                                <div class="input-group"><label>最后一公里费</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="ozon_lastMile" placeholder="0" oninput="calculateAll()"></div></div>
+                                <div class="input-group" id="ozon_processing_container" style="transition: all 0.2s ease;"><label>包裹处理费 (FBS)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="ozon_processing" placeholder="0" oninput="calculateAll()"></div></div>
+                                <div class="input-group"><label>退货处理费</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="ozon_returnProcessing" placeholder="0" oninput="calculateAll()"></div></div>
+                            </div>
+                            <div class="result-row" style="background:#f8fafc; border-radius:12px; padding: 1rem 1.25rem; margin-top:0.5rem; border: 1px solid var(--border-light);">
+                                <div class="result-box text-left-input" style="padding:0; background:transparent; border:none;" id="ozon_fwdSort_container"><label>去程分拣 (查表)</label><div class="input-wrapper"><span class="symbol" style="color:#475569;">₽</span><div id="ozon_fwdSort" class="value-display">0</div></div></div>
+                                <div class="result-box text-left-input" style="padding:0; background:transparent; border:none;" id="ozon_crossMarkup_container" style="transition: all 0.2s ease;"><label>非本地加价 (FBO)</label><div class="input-wrapper"><span class="symbol" style="color:#475569;">₽</span><div id="ozon_crossMarkup" class="value-display">0</div></div></div>
+                                <div class="result-box res-tint-teal res-small" style="margin-left:auto;"><label>正向·全程配送</label><div class="input-wrapper"><span class="symbol">₽</span><div id="ozon_forwardTotal" class="value-display">0</div></div></div>
+                                <div class="result-box res-tint-red res-small"><label>逆向·退回仓</label><div class="input-wrapper"><span class="symbol">₽</span><div id="ozon_reverseTotal" class="value-display">0</div></div></div>
+                            </div>
+                            <div class="result-row">
+                                <div class="result-box res-tint-blue res-small text-left-input"><label>物流总资费 (按概率均摊)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="ozon_totalLogisticsCost" class="value-display">0</div></div></div>
+                                <div class="result-box res-tint-gray res-small text-left-input"><label>物流占收入比</label><div class="input-wrapper"><div id="ozon_logRatio" class="value-display">0.00</div><span class="symbol">%</span></div></div>
+                            </div>
+                            
+                            <div class="sub-module-title">Ozon 杂项与仓储费用</div>
+                            <div class="input-row">
+                                <div class="input-group"><label>广告其它</label><div class="input-wrapper"><input type="number" id="ozon_adRate" placeholder="0.0" oninput="calculateAll()"><span class="symbol">%</span></div></div>
+                                <div class="input-group"><label>仓储 每L/天</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="ozon_storagePerL" placeholder="0.00" oninput="calculateAll()"></div></div>
+                            </div>
+                            <div class="result-row">
+                                <div class="result-box res-tint-amber res-small text-left-input"><label>广告其它费</label><div class="input-wrapper"><span class="symbol">₽</span><div id="ozon_adFee" class="value-display">0</div></div></div>
+                                <div class="result-box res-tint-amber res-small text-left-input"><label>无法均摊 (1%)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="ozon_unallocatedFee" class="value-display">0</div></div></div>
+                                <div class="result-box res-tint-amber res-small text-left-input"><label>FBO仓租 (30天)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="ozon_fboStorageFee" class="value-display">0</div></div></div>
+                            </div>
+                            <div class="result-row" style="margin-top:1.5rem;">
+                                <div class="result-box res-solid-red text-left-input" style="padding:1.25rem;"><label style="font-size:1rem;">Ozon 平台总扣费 (RUB)</label><div class="input-wrapper"><span class="symbol" style="font-size:1.5rem;">₽</span><div id="ozon_wbTotalDeduction" class="value-display">0</div></div></div>
+                                <div class="result-box res-solid-red text-left-input" style="padding:1.25rem; flex: 0.5;"><label style="font-size:1rem;">平台扣费占比</label><div class="input-wrapper"><div id="ozon_wbDeductionRatio" class="value-display">0.00</div><span class="symbol" style="font-size: 1.25rem;">%</span></div></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="card" id="module-4" style="margin-top: 0.5rem;">
-            <h2 class="card-title"><div class="card-title-indicator bg-rose"></div>回款明细和最终利润</h2>
-            <div class="input-row" style="margin-top: 1.25rem;">
-                <div class="input-group"><label>回款损耗设置</label><div class="input-wrapper"><input type="number" id="lossRate" placeholder="0.0" oninput="calculateAll()"><span class="symbol">%</span></div></div>
-                <div class="result-box res-tint-amber res-small text-left-input"><label>杂项提留 (3%)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="finalMiscFee" readonly placeholder="0"></div></div>
-                <div class="result-box res-tint-amber res-small text-left-input"><label>实际汇损额</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="lossRub" readonly placeholder="0"></div></div>
-            </div>
-            
-            <div class="result-row" style="margin-top: 0.5rem;">
-                <div class="result-box res-tint-blue res-small text-left-input"><label>产品着陆总成本 (RUB)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="text" id="totalUnitCost" readonly placeholder="0"></div></div>
+            <div class="card" id="module-4" style="margin-top: 0.5rem;">
+                <h2 class="card-title"><div class="card-title-indicator bg-rose"></div>回款明细和最终利润</h2>
+                <div class="input-row" style="margin-top: 1.25rem;">
+                    <div class="input-group"><label>回款损耗设置</label><div class="input-wrapper"><input type="number" id="lossRate" placeholder="0.0" oninput="calculateAll()"><span class="symbol">%</span></div></div>
+                    <div class="result-box res-tint-amber res-small text-left-input"><label>杂项提留 (3%)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="finalMiscFee" class="value-display">0</div></div></div>
+                    <div class="result-box res-tint-amber res-small text-left-input"><label>实际汇损额</label><div class="input-wrapper"><span class="symbol">₽</span><div id="lossRub" class="value-display">0</div></div></div>
+                </div>
                 
-                <div class="result-box res-solid-green text-left-input" id="profitRubBox" style="padding: 1.25rem 1.5rem;"><label>单件净利润 (RUB)</label><div class="input-wrapper"><span class="symbol" style="font-size:1.5rem;">₽</span><input type="text" id="profitRub" readonly placeholder="0" style="font-size:2.2rem;"></div></div>
-                <div class="result-box res-solid-green text-left-input" id="profitRmbBox" style="padding: 1.25rem 1.5rem;"><label>单件净利润 (RMB)</label><div class="input-wrapper"><span class="symbol" style="font-size:1.5rem;">¥</span><input type="text" id="profitRmb" readonly placeholder="0" style="font-size:2.2rem;"></div></div>
-            </div>
-            
-            <div class="result-row" style="border:none; padding-top:1.5rem; gap:1.5rem;">
-                <div class="progress-box" id="marginBox" style="flex:1;">
-                    <div class="progress-bar bar-green" id="marginBar"></div>
-                    <label style="position:relative; z-index:2;">核心净利润率 (Net Margin)</label>
-                    <div class="input-wrapper" style="position:relative; z-index:2;"><input type="text" id="netMargin" readonly placeholder="0.00"><span class="symbol" style="font-size: 1.4rem;">%</span></div>
+                <div class="result-row" style="margin-top: 0.5rem;">
+                    <div class="result-box res-tint-blue res-small text-left-input"><label>产品着陆总成本 (RUB)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="totalUnitCost" class="value-display">0</div></div></div>
+                    
+                    <div class="result-box res-solid-green text-left-input" id="profitRubBox" style="padding: 1.25rem 1.5rem;"><label>单件净利润 (RUB)</label><div class="input-wrapper"><span class="symbol" style="font-size:1.5rem;">₽</span><div id="profitRub" class="value-display">0</div></div></div>
+                    <div class="result-box res-solid-green text-left-input" id="profitRmbBox" style="padding: 1.25rem 1.5rem;"><label>单件净利润 (RMB)</label><div class="input-wrapper"><span class="symbol" style="font-size:1.5rem;">¥</span><div id="profitRmb" class="value-display">0</div></div></div>
                 </div>
-                <div class="progress-box" id="roiBox" style="flex:1;">
-                    <div class="progress-bar bar-green" id="roiBar"></div>
-                    <label style="position:relative; z-index:2;">投资回报率 (ROI)</label>
-                    <div class="input-wrapper" style="position:relative; z-index:2;"><input type="text" id="roiRate" readonly placeholder="0.00"><span class="symbol" style="font-size: 1.4rem;">%</span></div>
+                
+                <div class="result-row" style="border:none; padding-top:1.5rem; gap:1.5rem;">
+                    <div class="progress-box" id="marginBox" style="flex:1;">
+                        <div class="progress-bar bar-green" id="marginBar"></div>
+                        <label style="position:relative; z-index:2;">核心净利润率 (Net Margin)</label>
+                        <div class="input-wrapper" style="position:relative; z-index:2;"><div id="netMargin" class="value-display">0.00</div><span class="symbol" style="font-size: 1.4rem;">%</span></div>
+                    </div>
+                    <div class="progress-box" id="roiBox" style="flex:1;">
+                        <div class="progress-bar bar-green" id="roiBar"></div>
+                        <label style="position:relative; z-index:2;">投资回报率 (ROI)</label>
+                        <div class="input-wrapper" style="position:relative; z-index:2;"><div id="roiRate" class="value-display">0.00</div><span class="symbol" style="font-size: 1.4rem;">%</span></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -541,377 +513,97 @@
 </div>
 
 <script>
-// ==================== 核心算法明文源码层 ====================
-
-const wbLocMap = {
-    "95-100": { reg: 0.5, krp: 0.00 }, "90-94":  { reg: 0.65, krp: 0.00 }, "85-89":  { reg: 0.75, krp: 0.00 }, "80-84":  { reg: 0.85, krp: 0.00 },
-    "75-79":  { reg: 0.95, krp: 0.00 }, "70-74":  { reg: 1.0, krp: 0.00 }, "65-69":  { reg: 1.0, krp: 0.00 }, "60-64":  { reg: 1.0, krp: 0.00 },
-    "55-59":  { reg: 1.05, krp: 0.02 }, "50-54":  { reg: 1.15, krp: 0.0205 }, "45-49":  { reg: 1.25, krp: 0.0205 }, "40-44":  { reg: 1.35, krp: 0.021 },
-    "35-39":  { reg: 1.45, krp: 0.021 }, "30-34":  { reg: 1.55, krp: 0.0215 }, "25-29":  { reg: 1.65, krp: 0.022 }, "20-24":  { reg: 1.75, krp: 0.0225 },
-    "15-19":  { reg: 1.85, krp: 0.023 }, "10-14":  { reg: 1.9, krp: 0.0235 }, "5-9":    { reg: 1.95, krp: 0.0245 }, "0-4":    { reg: 2.0, krp: 0.025 },
-    "none":   { reg: 1.0, krp: 0.00 }
-};
-
-const ozonCrossMarkupRate = {
-    "Алматы": 0.06, "Армения": 0, "Астана": 0.06, "Беларусь": 0.06, "Воронеж": 0.08, "Дальний Восток": 0, "Екатеринбург": 0.08,
-    "Казань": 0.08, "Калининград": 0.08, "Краснодар": 0.08, "Красноярск": 0, "Кыргызстан": 0, "Махачкала": 0.08, "Москва, МО и Дальние регионы": 0.08,
-    "Невинномысск": 0.08, "Новосибирск": 0, "Омск": 0.12, "Оренбург": 0.12, "Пермь": 0.12, "Ростов": 0, "Самара": 0.12, "Санкт-Петербург и СЗО": 0.08,
-    "Саратов": 0.08, "Тверь": 0.08, "Тюмень": 0.08, "Узбекистан": 0, "Уфа": 0.08, "Ярославль": 0.08
-};
-
-const taxMap = {
-    "t1": { base: 6, vat: 0, type: 'sales' },
-    "t2": { base: 15, vat: 0, type: 'profit' },
-    "t3": { base: 7, vat: 5, type: 'sales' },
-    "t4": { base: 15, vat: 5, type: 'profit' },
-    "t5": { base: 0, vat: 0, type: 'sales' }
-};
-
-const templateFields = [
-    'exchangeRate', 'taxSystem', 'lossRate', 'wb_discount', 'wb_commissionRate', 'wb_shippingMethod', 'wb_locIndex', 'wb_baseRate', 'wb_over1LRate', 'wb_fbwMultiplier', 'wb_deliveryRate', 'wb_adRate', 'wb_storagePerL',
-    'ozon_discount', 'ozon_commissionRate', 'ozon_shippingMethod', 'ozon_fromCluster', 'ozon_toCluster', 'ozon_deliveryRate', 'ozon_lastMile', 'ozon_processing', 'ozon_returnProcessing', 'ozon_adRate', 'ozon_storagePerL'
-];
-
-let currentEditingId = null;
-let currentPlatform = 'WB';
-
-function getData(key) { try { let res = JSON.parse(localStorage.getItem(key)); return (res && typeof res === 'object' && !Array.isArray(res)) ? res : {}; } catch(e) { return {}; } }
-function getArrayData(key) { try { let res = JSON.parse(localStorage.getItem(key)); return Array.isArray(res) ? res : []; } catch(e) { return []; } }
-function setData(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
-function getVal(id) { let el = document.getElementById(id); return el ? (parseFloat(el.value) || 0) : 0; }
-function setFmt(id, val, isFloat = false) { let el = document.getElementById(id); if (el) { el.value = val !== 0 ? (isFloat ? val.toFixed(2) : Math.round(val).toLocaleString()) : '0'; } return val; }
-
-function getOzonVolBandStringDynamically(vol) {
-    let bands = getArrayData('ozon_vol_bands');
-    if (bands.length > 0) {
-        for(let i=0; i<bands.length; i++) { if (vol <= bands[i].max) return bands[i].key; }
-        return bands[bands.length-1].key;
-    }
-    if (vol <= 0.2) return "0-0,200 л"; if (vol <= 0.4) return "0,201-0,4 л"; if (vol <= 0.6) return "0,401-0,6 л"; if (vol <= 0.8) return "0,601-0,8 л";
-    if (vol <= 1.0) return "0,801-1 л"; if (vol <= 1.25) return "1,001-1,25 л"; if (vol <= 1.5) return "1,251-1,5 л"; if (vol <= 1.75) return "1,501-1,75 л";
-    if (vol <= 2.0) return "1,751-2 л"; if (vol <= 3.0) return "2,001-3 л"; if (vol <= 4.0) return "3,001-4 л"; if (vol <= 5.0) return "4,001-5 л";
-    let upper = Math.ceil(vol); return `${upper-1},001-${upper} л`;
-}
-
-function getOzonSortFee(vol, price, fromC, toC) {
-    let volStr = getOzonVolBandStringDynamically(vol);
-    let matrix = getData('ozon_matrix_cache');
-    let isHigh = price > 300;
-    if (matrix && matrix[fromC] && matrix[fromC][toC] && matrix[fromC][toC][volStr]) { return isHigh ? matrix[fromC][toC][volStr].o : matrix[fromC][toC][volStr].u; }
-    if (vol <= 0.2) return isHigh ? 56 : 17.28; if (vol <= 0.4) return isHigh ? 63 : 19.32; if (vol <= 0.6) return isHigh ? 67 : 21.35;
-    if (vol <= 0.8) return isHigh ? 67 : 22.37; if (vol <= 1.0) return isHigh ? 67 : 23.38; if (vol <= 1.25) return isHigh ? 71 : 25.42;
-    if (vol <= 1.5) return isHigh ? 74 : 26.43; if (vol <= 1.75) return isHigh ? 74 : 27.45; if (vol <= 2.0) return isHigh ? 74 : 29.48;
-    if (vol <= 3.0) return isHigh ? 74 : 31.52; if (vol <= 4.0) return isHigh ? 78 : 35.58;
-    let extra = Math.ceil(vol - 4); return isHigh ? (78 + extra * 12) : (35.58 + extra * 10);
-}
-
-function updateOzonDbStatus() {
-    let statusEl = document.getElementById('ozonDbStatus');
-    let matrix = getData('ozon_matrix_cache');
-    if (!statusEl) return;
-    if (matrix && Object.keys(matrix).length > 0) {
-        statusEl.innerHTML = '<span class="status-dot dot-green"></span>已挂载本地全量集群数据字典 (精确匹配)';
-        statusEl.style.color = '#10b981';
-    } else {
-        statusEl.innerHTML = '<span class="status-dot dot-yellow"></span>未导入 (当前使用系统底线默认价)';
-        statusEl.style.color = '#f59e0b';
-    }
-}
-
-function parsePastedExcel() {
-    let text = document.getElementById('csvPasteArea').value;
-    if (!text || !text.trim()) { alert('请输入或粘贴 Excel 中的数据！'); return; }
+// ==================== 📸 终极一键截图引擎 (完美解决截图裁切与白屏) ====================
+async function copyToClipboard(btn) {
+    let originalHTML = btn.innerHTML;
+    btn.innerHTML = '正在渲染完美长图...';
+    btn.disabled = true;
+    
+    // 💡 魔法1：瞬间冻结呼吸灯动画，确保颜色最饱满
+    document.body.classList.add('no-animation'); 
+    
     try {
-        let lines = text.split(/\r?\n/);
-        let matrix = {}, volBands = [], volSet = new Set(), count = 0;
-        let delimiter = '\t';
-        if (text.indexOf('\t') === -1 && text.indexOf(',') !== -1) delimiter = ',';
-        if (text.indexOf('\t') === -1 && text.indexOf(';') !== -1) delimiter = ';';
-        
-        let cleanCells = s => s.split(delimiter).map(x => x.replace(/^"|"$/g, '').trim());
-        let headerRow = -1, vi = -1, fi = -1, ti = -1, ui = -1, oi = -1;
-        
-        for (let i = 0; i < Math.min(20, lines.length); i++) {
-            let p = cleanCells(lines[i]);
-            let x = p.findIndex(y => y.includes('Объём') || y.includes('Объем'));
-            if (x !== -1) {
-                vi = x; fi = p.findIndex(y => y.includes('отправления')); ti = p.findIndex(y => y.includes('доставки'));
-                ui = p.findIndex(y => y.includes('до 300')); oi = p.findIndex(y => y.includes('свыше 300')); headerRow = i; break;
-            }
-        }
-        
-        if (headerRow === -1 || fi === -1 || ti === -1) { alert('解析失败：未能找到核心表头。'); return; }
-        
-        for (let i = headerRow + 1; i < lines.length; i++) {
-            if (!lines[i].trim()) continue;
-            let p = cleanCells(lines[i]);
-            if (p.length <= Math.max(vi, fi, ti, ui, oi)) continue;
-            let vsr = p[vi], f_c = p[fi], t_c = p[ti];
-            if (!f_c || !t_c || !vsr) continue;
-            let pus = p[ui] ? p[ui].replace(/,/g, '.') : '0', pos = p[oi] ? p[oi].replace(/,/g, '.') : '0';
-            let pu = parseFloat(pus.replace(/\s/g, '')) || 0, po = parseFloat(pos.replace(/\s/g, '')) || 0;
-            
-            if (!matrix[f_c]) matrix[f_c] = {};
-            if (!matrix[f_c][t_c]) matrix[f_c][t_c] = {};
-            matrix[f_c][t_c][vsr] = { u: pu, o: po };
-            count++;
-            
-            if (!vs.has(vsr)) {
-                vs.add(vsr); let pv = vsr.split('-');
-                if (pv.length === 2) {
-                    let ms = pv[1].replace('л', '').replace(/,/g, '.').trim(); let mv = parseFloat(ms);
-                    if (!isNaN(mv)) volBands.push({ max: mv, key: vsr });
-                } else if (vsr.includes('более')) { volBands.push({ max: 99999, key: vsr }); }
-            }
-        }
-        if (count > 0) {
-            volBands.sort((a, b) => a.max - b.max);
-            setData('ozon_vol_bands', volBands); setData('ozon_matrix_cache', matrix);
-            alert(`解析成功！提取了 ${count} 条精准路线。`);
-            document.getElementById('csvPasteArea').value = '';
-            document.getElementById('pasteModal').style.display = 'none';
-            updateOzonDbStatus(); calculateAll();
-        } else { alert('有效行数为0。'); }
-    } catch (e) { alert('错误：' + e.message); }
-}
-
-function calculateAll() {
-    try {
-        let productCost = getVal('productCost');
-        let exchangeRate = getVal('exchangeRate');
-        let length = getVal('length');
-        let width = getVal('width');
-        let height = getVal('height');
-        
-        let volume = (length * width * height) / 1000;
-        setFmt('volume', volume, true);
-        let unitCost = productCost * exchangeRate;
-        setFmt('unitCost', unitCost);
-
-        let finalPrice = 0, finalTotalDeduction = 0;
-
-        if (currentPlatform === 'WB') {
-            let price = getVal('wb_price'); finalPrice = price;
-            let buyerPrice = price * (1 - getVal('wb_discount') / 100); setFmt('wb_buyerPrice', buyerPrice);
-            let commissionFee = price * (getVal('wb_commissionRate') / 100); setFmt('wb_commissionFee', commissionFee);
-            let bankFee = price * 0.015; setFmt('wb_bankFee', bankFee);
-
-            let locInfo = wbLocMap[document.getElementById('wb_locIndex').value] || { reg: 1.0, krp: 0 };
-            document.getElementById('wb_krpRatio').value = (locInfo.krp * 100).toFixed(2);
-            
-            let fbwMultiplier = getVal('wb_fbwMultiplier') || 1;
-            let shippingMethod = document.getElementById('wb_shippingMethod').value;
-            let baseRate = getVal('wb_baseRate');
-            let over1LRate = getVal('wb_over1LRate');
-            
-            let logisticsFee = 0;
-            if (volume > 0 && volume < 1) {
-                let smallVolBase = volume <= 0.2 ? 23 : volume <= 0.4 ? 26 : volume <= 0.6 ? 29 : 30; logisticsFee = volume * smallVolBase;
-            } else { let extraVolume = volume > 1 ? volume - 1 : 0; logisticsFee = baseRate + (extraVolume * over1LRate); }
-            if (shippingMethod === 'FBW') logisticsFee *= fbwMultiplier;
-            setFmt('wb_logisticsFee', logisticsFee);
-
-            let reverseFee = baseRate + ((volume > 1 ? volume - 1 : 0) * over1LRate); setFmt('wb_reverseFee', reverseFee);
-            let totalJourney = (locInfo.reg * logisticsFee) + (price * locInfo.krp); setFmt('wb_totalJourney', totalJourney);
-            let deliveryRate = getVal('wb_deliveryRate'); if (deliveryRate <= 0) deliveryRate = 100;
-            
-            let totalLogisticsCost = (100 / deliveryRate) * totalJourney + ((100 / deliveryRate) - 1) * reverseFee; setFmt('wb_totalLogisticsCost', totalLogisticsCost);
-            document.getElementById('wb_logRatio').value = price > 0 ? ((totalLogisticsCost / price) * 100).toFixed(2) : '0.00';
-
-            let adFee = price * (getVal('wb_adRate') / 100); setFmt('wb_adFee', adFee);
-            let unallocatedFee = price * 0.01; setFmt('wb_unallocatedFee', unallocatedFee);
-            let fbwStorageFee = getVal('wb_storagePerL') * fbwMultiplier * volume * 30; setFmt('wb_fbwStorageFee', fbwStorageFee);
-
-            finalTotalDeduction = commissionFee + bankFee + totalLogisticsCost + adFee + unallocatedFee + fbwStorageFee; setFmt('wb_wbTotalDeduction', finalTotalDeduction);
-            document.getElementById('wb_wbDeductionRatio').value = price > 0 ? ((finalTotalDeduction / price) * 100).toFixed(2) : '0.00';
-
-        } 
-        else if (currentPlatform === 'Ozon') {
-            let price = getVal('ozon_price'); finalPrice = price;
-            let buyerPrice = price * (1 - getVal('ozon_discount') / 100); setFmt('ozon_buyerPrice', buyerPrice); 
-            let commissionFee = price * (getVal('ozon_commissionRate') / 100); setFmt('ozon_commissionFee', commissionFee);
-            let bankFee = price * 0.015; setFmt('ozon_bankFee', bankFee);
-
-            let method = document.getElementById('ozon_shippingMethod').value;
-            let fromC = document.getElementById('ozon_fromCluster').value;
-            let toC = document.getElementById('ozon_toCluster').value;
-            
-            // FBO/FBS 互斥组件物理禁用逻辑
-            let processGroup = document.getElementById('ozon_processing_container');
-            if (processGroup) {
-                processGroup.style.opacity = method === 'FBO' ? '0.4' : '1';
-                processGroup.style.pointerEvents = method === 'FBO' ? 'none' : 'auto';
-            }
-            let markupGroup = document.getElementById('ozon_crossMarkup_container');
-            if (markupGroup) { 
-                markupGroup.style.opacity = method === 'FBS' ? '0.4' : '1';
-                markupGroup.style.pointerEvents = method === 'FBS' ? 'none' : 'auto';
-            }
-            
-            let fwdSort = getOzonSortFee(volume, price, fromC, toC); setFmt('ozon_fwdSort', fwdSort);
-            let crossMarkup = 0; if (method === 'FBO' && fromC !== toC) { let rate = ozonCrossMarkupRate[toC] || 0; crossMarkup = price * rate; }
-            setFmt('ozon_crossMarkup', crossMarkup);
-
-            let lastMile = getVal('ozon_lastMile'); let processing = method === 'FBS' ? getVal('ozon_processing') : 0; let returnProc = getVal('ozon_returnProcessing');
-            let forwardTotal = fwdSort + crossMarkup + processing + lastMile; setFmt('ozon_forwardTotal', forwardTotal);
-            let revSort = getOzonSortFee(volume, price, toC, toC); let reverseTotal = returnProc + revSort; setFmt('ozon_reverseTotal', reverseTotal);
-            let deliveryRate = getVal('ozon_deliveryRate'); if (deliveryRate <= 0) deliveryRate = 100;
-            
-            let totalLogisticsCost = (100 / deliveryRate) * forwardTotal + ((100 / deliveryRate) - 1) * reverseTotal; setFmt('ozon_totalLogisticsCost', totalLogisticsCost);
-            document.getElementById('ozon_logRatio').value = price > 0 ? ((totalLogisticsCost / price) * 100).toFixed(2) : '0.00';
-
-            let adFee = price * (getVal('ozon_adRate') / 100); setFmt('ozon_adFee', adFee);
-            let unallocatedFee = price * 0.01; setFmt('ozon_unallocatedFee', unallocatedFee);
-            let fboStorageFee = getVal('ozon_storagePerL') * volume * 30; setFmt('ozon_fboStorageFee', fboStorageFee);
-
-            finalTotalDeduction = commissionFee + bankFee + totalLogisticsCost + adFee + unallocatedFee + fboStorageFee; setFmt('ozon_wbTotalDeduction', finalTotalDeduction); 
-            document.getElementById('ozon_wbDeductionRatio').value = price > 0 ? ((finalTotalDeduction / price) * 100).toFixed(2) : '0.00';
-        }
-
-        let taxOpt = taxMap[document.getElementById('taxSystem').value];
-        document.getElementById('taxRateDisp').value = taxOpt.base; document.getElementById('vatRateDisp').value = taxOpt.vat;
-        
-        let baseTaxRub = 0;
-        if (taxOpt.type === 'sales') { baseTaxRub = finalPrice * (taxOpt.base / 100); } 
-        else if (taxOpt.type === 'profit') { let taxProfit = finalPrice - finalTotalDeduction; baseTaxRub = taxProfit > 0 ? taxProfit * (taxOpt.base / 100) : 0; }
-        let vatRub = finalPrice * (taxOpt.vat / 100); let taxRub = baseTaxRub + vatRub; setFmt('taxRub', taxRub);
-
-        let finalMiscFee = finalPrice * 0.03; setFmt('finalMiscFee', finalMiscFee);
-        let lossBase = finalPrice - finalTotalDeduction - taxRub; let lossRub = lossBase > 0 ? lossBase * (getVal('lossRate') / 100) : 0; setFmt('lossRub', lossRub);
-        
-        let totalUnitCost = unitCost + finalTotalDeduction + taxRub + finalMiscFee + lossRub; setFmt('totalUnitCost', totalUnitCost);
-        let profitRub = finalPrice - totalUnitCost; setFmt('profitRub', profitRub);
-        let profitRmb = exchangeRate > 0 ? profitRub / exchangeRate : 0; setFmt('profitRmb', profitRmb, true);
-        let netMargin = finalPrice > 0 ? (profitRub / finalPrice) * 100 : 0; document.getElementById('netMargin').value = netMargin.toFixed(2);
-        let roiRate = unitCost > 0 ? (profitRub / unitCost) * 100 : 0; document.getElementById('roiRate').value = roiRate.toFixed(2);
-
-        // 💡 修复：强制注入情绪化色彩反馈 (彻底解决白色隐形Bug)
-        let isLoss = profitRub < 0;
-        let pBox1 = document.getElementById('profitRubBox'); 
-        if (pBox1) pBox1.className = 'result-box text-left-input ' + (isLoss ? 'res-solid-red' : 'res-solid-green');
-        let pBox2 = document.getElementById('profitRmbBox'); 
-        if (pBox2) pBox2.className = 'result-box text-left-input ' + (isLoss ? 'res-solid-red' : 'res-solid-green');
-        
-        // 💡 修复：重燃底部进度条流光呼吸灯
-        let mBox = document.getElementById('marginBox'); 
-        if (mBox) mBox.className = 'progress-box ' + (isLoss ? 'text-red-alert' : '');
-        let mBar = document.getElementById('marginBar'); 
-        if (mBar) { mBar.className = 'progress-bar ' + (isLoss ? 'bar-red' : 'bar-green'); mBar.style.width = Math.min(Math.abs(netMargin), 100) + '%'; }
-        
-        let rBox = document.getElementById('roiBox'); 
-        if (rBox) rBox.className = 'progress-box ' + (isLoss ? 'text-red-alert' : '');
-        let rBar = document.getElementById('roiBar'); 
-        if (rBar) { rBar.className = 'progress-bar ' + (isLoss ? 'bar-red' : 'bar-green'); rBar.style.width = Math.min(Math.abs(roiRate), 100) + '%'; }
-        
-    } catch (e) { console.error(e); }
-}
-
-function loadTemplateDropdown() {
-    let t = getData('erp_templates'), s = document.getElementById('templateSelect'); if (!s) return;
-    s.innerHTML = '<option value="">-- 通用参数模板 --</option>';
-    for (let k in t) { let o = document.createElement('option'); o.value = k; o.textContent = k; s.appendChild(o); }
-}
-function saveAsTemplate() {
-    let n = prompt("请输入新模板名称:"); if (!n || !n.trim()) return; n = n.trim();
-    let td = {}, ts = getData('erp_templates');
-    templateFields.forEach(id => { let e = document.getElementById(id); td[id] = e ? e.value : ''; });
-    ts[n] = td; setData('erp_templates', ts); loadTemplateDropdown();
-    let s = document.getElementById('templateSelect'); if (s) s.value = n; alert('模板保存成功！');
-}
-function applyTemplate() {
-    let s = document.getElementById('templateSelect'); if (!s) return;
-    let n = s.value; if (!n) { alert('请先选择模板！'); return; }
-    let ts = getData('erp_templates'), td = ts[n];
-    if (td) { for (let k in td) { let e = document.getElementById(k); if (e) e.value = td[k]; } calculateAll(); }
-}
-function deleteTemplate() {
-    let s = document.getElementById('templateSelect'); if (!s) return; let n = s.value; if (!n) return;
-    if (confirm('确定删除模板吗？')) { let ts = getData('erp_templates'); delete ts[n]; setData('erp_templates', ts); loadTemplateDropdown(); }
-}
-function showDashboard() {
-    document.getElementById('dashboardView').style.display = 'block'; document.getElementById('detailView').style.display = 'none';
-    renderTable();
-}
-function togglePlatformView(p) {
-    currentPlatform = p; let b = document.getElementById('currentPlatBadge');
-    if (b) { b.innerText = p.toUpperCase(); b.className = 'plat-tag ' + (p === 'WB' ? 'tag-wb' : 'tag-ozon'); }
-    let wr = document.getElementById('wb-right-engine'); if (wr) wr.style.display = (p === 'WB') ? 'block' : 'none';
-    let or = document.getElementById('ozon-right-engine'); if (or) or.style.display = (p === 'Ozon') ? 'block' : 'none';
-}
-function createNewProduct(p) {
-    currentEditingId = Date.now().toString(); togglePlatformView(p || 'WB');
-    document.querySelectorAll('input[type="number"], input[type="text"]').forEach(e => { if (e.id !== 'skuFilter' && e.id !== 'csvPasteArea') e.value = ''; });
-    document.getElementById('skuName').value = ''; document.getElementById('templateSelect').value = ''; calculateAll();
-    document.getElementById('dashboardView').style.display = 'none'; document.getElementById('detailView').style.display = 'block';
-}
-function editProduct(id) {
-    currentEditingId = id; let ps = getData('erp_products'), pd = ps[id];
-    if (pd) {
-        togglePlatformView(pd.platform || 'WB'); document.getElementById('skuName').value = pd.sku || '';
-        for (let k in pd.fields) { let e = document.getElementById(k); if (e) e.value = pd.fields[k]; }
-        document.getElementById('templateSelect').value = ''; calculateAll();
-        document.getElementById('dashboardView').style.display = 'none'; document.getElementById('detailView').style.display = 'block';
-    }
-}
-function deleteProduct(id) { if (confirm('确定删除该方案吗？')) { let ps = getData('erp_products'); delete ps[id]; setData('erp_products', ps); renderTable(); } }
-function saveProduct() {
-    try {
-        let se = document.getElementById('skuName'); if (!se || !se.value.trim()) { alert('提示：请先在上方填写 SKU 或产品名称！'); return; }
-        let sn = se.value.trim(), fd = {};
-        templateFields.forEach(id => { let e = document.getElementById(id); fd[id] = e ? e.value : ''; });
-        ['productCost', 'exchangeRate', 'length', 'width', 'height', 'wb_price', 'ozon_price'].forEach(id => { let e = document.getElementById(id); if (e) fd[id] = e.value; });
-        let pre = currentPlatform === 'WB' ? 'wb_' : 'ozon_', ps = getData('erp_products') || {}, sv = function(i) { let e = document.getElementById(i); return e ? e.value : '0'; };
-        ps[currentEditingId] = {
-            platform: currentPlatform, sku: sn, ts: Date.now(), fields: fd,
-            summary: {
-                price: sv(pre + 'price'), platformCommission: sv(pre + 'commissionFee'), totalLogisticsCost: sv(pre + 'totalLogisticsCost'),
-                wbTotalDeduction: sv(pre + 'wbTotalDeduction'), wbDeductionRatio: sv(pre + 'wbDeductionRatio'),
-                profitRmb: sv('profitRmb'), netMargin: sv('netMargin'), roiRate: sv('roiRate')
-            }
-        };
-        setData('erp_products', ps); showDashboard();
-    } catch (e) { alert('保存失败: ' + e.message); }
-}
-function renderTable() {
-    let tb = document.getElementById('tableBody'); if (!tb) return;
-    try {
-        let ps = getData('erp_products') || {}; tb.innerHTML = ''; let ks = Object.keys(ps);
-        if (ks.length === 0) { tb.innerHTML = '<tr><td colspan="11" style="text-align:center; color:#9ca3af; padding: 4rem;">暂无核算数据，请点击上方平台卡片新建</td></tr>'; return; }
-        let a = ks.map(k => ({ id: k, ...(ps[k] || {}) })); a.sort((x, y) => (y.ts || y.timestamp || 0) - (x.ts || x.timestamp || 0));
-        let pf = document.getElementById('platformFilter').value, sf = document.getElementById('skuFilter').value.toLowerCase();
-        a = a.filter(p => { let pl = p.platform || 'WB'; return (pf === 'All' || pl === pf) && (p.sku || '').toLowerCase().includes(sf); });
-        if (a.length === 0) { tb.innerHTML = '<tr><td colspan="11" style="text-align:center; color:#9ca3af; padding: 4rem;">未能检索到符合条件的数据</td></tr>'; return; }
-        a.forEach(p => {
-            let s = p.summary || {}, pl = p.platform || 'WB', pt = pl === 'WB' ? '<span class="plat-tag tag-wb">WB</span>' : '<span class="plat-tag tag-ozon">OZON</span>';
-            let profit = parseFloat(s.profitRmb) || 0, c = profit < 0 ? 'text-loss' : 'text-profit', cd = s.platformCommission || s.wbCommissionFee || '0';
-            let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${pt}</td><td style="font-weight: 700;">${p.sku || '未知'}</td><td>₽ ${s.price || '0'}</td><td>₽ ${cd}</td><td>₽ ${s.totalLogisticsCost || '0'}</td><td>₽ ${s.wbTotalDeduction || '0'}</td><td>${s.wbDeductionRatio || '0'} %</td><td class="${c}">¥ ${s.profitRmb || '0'}</td><td class="${c}">${s.netMargin || '0'} %</td><td class="${c}">${s.roiRate || '0'} %</td><td><div style="display:flex; justify-content:center; gap:0.5rem;"><button class="btn btn-outline" style="padding:0.35rem 0.85rem;" onclick="editProduct('${p.id}')">编辑</button> <button class="btn btn-danger-outline" style="padding:0.35rem 0.85rem;" onclick="deleteProduct('${p.id}')">删除</button></div></td>`;
-            tb.appendChild(tr);
+        let targetArea = document.getElementById('captureArea');
+        let canvas = await html2canvas(targetArea, {
+            scale: 2, 
+            backgroundColor: '#f1f5f9',
+            useCORS: true,
+            logging: false
         });
-    } catch (e) { tb.innerHTML = '<tr><td colspan="11" style="text-align:center; color:red;">渲染列表失败，请点击清理缓存</td></tr>'; }
-}
-function clearAllData() {
-    if (confirm('警告：这会彻底清空所有产品、模板以及导出的数据！确定吗？')) {
-        localStorage.removeItem('erp_products'); localStorage.removeItem('erp_templates'); localStorage.removeItem('ozon_matrix_cache'); localStorage.removeItem('ozon_vol_bands');
-        alert('清理完毕！页面即将刷新。'); location.reload();
+        
+        canvas.toBlob(async function(blob) {
+            try {
+                const item = new ClipboardItem({ 'image/png': blob });
+                await navigator.clipboard.write([item]);
+                btn.innerHTML = '✅ 已复制，去粘贴吧！';
+                btn.style.backgroundColor = '#10b981';
+                btn.style.color = '#fff';
+                btn.style.borderColor = '#10b981';
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.style.backgroundColor = '';
+                    btn.style.color = '#4f46e5';
+                    btn.style.borderColor = '#c7d2fe';
+                    btn.disabled = false;
+                }, 3000);
+            } catch (err) {
+                alert('复制失败，请检查浏览器剪贴板权限！');
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+            }
+            // 💡 魔法2：恢复呼吸动画
+            document.body.classList.remove('no-animation');
+        }, 'image/png');
+    } catch (err) {
+        alert('截图生成失败！');
+        btn.innerHTML = originalHTML;
+        btn.disabled = false;
+        document.body.classList.remove('no-animation');
     }
 }
-function exportData() {
-    let p = getData('erp_products'), t = getData('erp_templates');
-    if (Object.keys(p).length === 0 && Object.keys(t).length === 0) { alert('没有数据可导出！'); return; }
-    let b = new Blob([JSON.stringify({ products: p, templates: t })], { type: 'application/json' }), a = document.createElement('a');
-    a.href = URL.createObjectURL(b); a.download = `双核定价系统备份_${new Date().toISOString().slice(0, 10)}.json`; a.click();
+
+// ==================== 反破解与高强度混淆底层 ====================
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => { if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) { e.preventDefault(); } });
+
+const _wM={"95-100":{r:0.5,k:0},"90-94":{r:0.65,k:0},"85-89":{r:0.75,k:0},"80-84":{r:0.85,k:0},"75-79":{r:0.95,k:0},"70-74":{r:1,k:0},"65-69":{r:1,k:0},"60-64":{r:1,k:0},"55-59":{r:1.05,k:0.02},"50-54":{r:1.15,k:0.0205},"45-49":{r:1.25,k:0.0205},"40-44":{r:1.35,k:0.021},"35-39":{r:1.45,k:0.021},"30-34":{r:1.55,k:0.0215},"25-29":{r:1.65,k:0.022},"20-24":{r:1.75,k:0.0225},"15-19":{r:1.85,k:0.023},"10-14":{r:1.9,k:0.0235},"5-9":{r:1.95,k:0.0245},"0-4":{r:2,k:0.025},none:{r:1,k:0}};const _oR={"Алматы":0.06,"Армения":0,"Астана":0.06,"Беларусь":0.06,"Воронеж":0.08,"Дальний Восток":0,"Екатеринбург":0.08,"Казань":0.08,"Калининград":0.08,"Краснодар":0.08,"Красноярск":0,"Кыргызстан":0,"Махачкала":0.08,"Москва, МО и Дальние регионы":0.08,"Невинномысск":0.08,"Новосибирск":0,"Омск":0.12,"Оренбург":0.12,"Пермь":0.12,"Ростов":0,"Самара":0.12,"Санкт-Петербург и СЗО":0.08,"Саратов":0.08,"Тверь":0.08,"Тюмень":0.08,"Узбекистан":0,"Уфа":0.08,"Ярославль":0.08};const _tM={t1:{b:6,v:0,t:'s'},t2:{b:15,v:0,t:'p'},t3:{b:7,v:5,t:'s'},t4:{b:15,v:5,t:'p'},t5:{b:0,v:0,t:'s'}};const _tF=['exchangeRate','taxSystem','lossRate','wb_discount','wb_commissionRate','wb_shippingMethod','wb_locIndex','wb_baseRate','wb_over1LRate','wb_fbwMultiplier','wb_deliveryRate','wb_adRate','wb_storagePerL','ozon_discount','ozon_commissionRate','ozon_shippingMethod','ozon_fromCluster','ozon_toCluster','ozon_deliveryRate','ozon_lastMile','ozon_processing','ozon_returnProcessing','ozon_adRate','ozon_storagePerL'];let _cI=null,_cP='WB';
+function _g(k){try{let r=JSON.parse(localStorage.getItem(k));return(r&&typeof r==='object'&&!Array.isArray(r))?r:{}}catch(e){return{}}}function _ga(k){try{let r=JSON.parse(localStorage.getItem(k));return Array.isArray(r)?r:[]}catch(e){return[]}}function _s(k,v){localStorage.setItem(k,JSON.stringify(v))}function _v(i){let e=document.getElementById(i);return e?(e.tagName==='INPUT'||e.tagName==='SELECT'?parseFloat(e.value)||0:parseFloat(e.innerText)||0):0}
+
+// 💡 修复：底层格式化函数升级，自动识别 Input 和 Div 进行写入
+function _f(i,v,f=!1){
+    let e=document.getElementById(i);
+    if(e){
+        let txt = v!==0?(f?v.toFixed(2):Math.round(v).toLocaleString()):'0';
+        if(e.tagName==='INPUT'||e.tagName==='SELECT') e.value=txt;
+        else e.innerText=txt;
+    }
+    return v;
 }
-function importData(e) {
-    let f = e.target.files[0]; if (!f) return; let r = new FileReader();
-    r.onload = function(x) {
-        try { let j = JSON.parse(x.target.result); if (j.products) { setData('erp_products', j.products); if (j.templates) setData('erp_templates', j.templates); } else { setData('erp_products', j); } alert('数据导入成功！'); loadTemplateDropdown(); renderTable(); } catch (err) { alert('文件格式错误！导入失败。'); }
-    }; r.readAsText(f);
-}
-window.onload = function() {
-    updateOzonDbStatus(); loadTemplateDropdown(); renderTable();
-    let m = getData('ozon_matrix_cache'); if (!m || Object.keys(m).length === 0) { let md = document.getElementById('pasteModal'); if (md) md.style.display = 'block'; }
-};
+
+function _gb(v){let b=_ga('ozon_vol_bands');if(b.length>0){for(let i=0;i<b.length;i++){if(v<=b[i].max)return b[i].key}return b[b.length-1].key}if(v<=0.2)return"0-0,200 л";if(v<=0.4)return"0,201-0,4 л";if(v<=0.6)return"0,401-0,6 л";if(v<=0.8)return"0,601-0,8 л";if(v<=1.0)return"0,801-1 л";if(v<=1.25)return"1,001-1,25 л";if(v<=1.5)return"1,251-1,5 л";if(v<=1.75)return"1,501-1,75 л";if(v<=2.0)return"1,751-2 л";if(v<=3.0)return"2,001-3 л";if(v<=4.0)return"3,001-4 л";if(v<=5.0)return"4,001-5 л";let u=Math.ceil(v);return`${u-1},001-${u} л`}
+function _gf(v,p,f,t){let vs=_gb(v),m=_g('ozon_matrix_cache'),ih=p>300;if(m&&m[f]&&m[f][t]&&m[f][t][vs])return ih?m[f][t][vs].o:m[f][t][vs].u;if(v<=0.2)return ih?56:17.28;if(v<=0.4)return ih?63:19.32;if(v<=0.6)return ih?67:21.35;if(v<=0.8)return ih?67:22.37;if(v<=1.0)return ih?67:23.38;if(v<=1.25)return ih?71:25.42;if(v<=1.5)return ih?74:26.43;if(v<=1.75)return ih?74:27.45;if(v<=2.0)return ih?74:29.48;if(v<=3.0)return ih?74:31.52;if(v<=4.0)return ih?78:35.58;let x=Math.ceil(v-4);return ih?(78+x*12):(35.58+x*10)}
+function updateOzonDbStatus(){let s=document.getElementById('ozonDbStatus'),m=_g('ozon_matrix_cache');if(!s)return;if(m&&Object.keys(m).length>0){s.innerHTML='<span class="status-dot dot-green"></span>已挂载本地全量数据表';s.style.color='#10b981'}else{s.innerHTML='<span class="status-dot dot-yellow"></span>未导入 (当前使用底线默认价)';s.style.color='#f59e0b'}}
+window._P_E=function(){let t=document.getElementById('csvPasteArea').value;if(!t||!t.trim()){alert('请输入数据！');return}try{let ls=t.split(/\r?\n/),m={},vb=[],vs=new Set(),c=0,dl='\t';if(t.indexOf('\t')===-1&&t.indexOf(',')!==-1)dl=',';if(t.indexOf('\t')===-1&&t.indexOf(';')!==-1)dl=';';let cl=s=>s.split(dl).map(x=>x.replace(/^"|"$/g,'').trim()),hr=-1,vi=-1,fi=-1,ti=-1,ui=-1,oi=-1;for(let i=0;i<Math.min(20,ls.length);i++){let p=cl(ls[i]),x=p.findIndex(y=>y.includes('Объём')||y.includes('Объем'));if(x!==-1){vi=x;fi=p.findIndex(y=>y.includes('отправления'));ti=p.findIndex(y=>y.includes('доставки'));ui=p.findIndex(y=>y.includes('до 300'));oi=p.findIndex(y=>y.includes('свыше 300'));hr=i;break}}if(hr===-1||fi===-1||ti===-1){alert('解析失败');return}for(let i=hr+1;i<ls.length;i++){if(!ls[i].trim())continue;let p=cl(ls[i]);if(p.length<=Math.max(vi,fi,ti,ui,oi))continue;let vsr=p[vi],f_c=p[fi],t_c=p[ti];if(!f_c||!t_c||!vsr)continue;let pus=p[ui]?p[ui].replace(/,/g,'.'):'0',pos=p[oi]?p[oi].replace(/,/g,'.'):'0',pu=parseFloat(pus.replace(/\s/g,''))||0,po=parseFloat(pos.replace(/\s/g,''))||0;if(!m[f_c])m[f_c]={};if(!m[f_c][t_c])m[f_c][t_c]={};m[f_c][t_c][vsr]={u:pu,o:po};c++;if(!vs.has(vsr)){vs.add(vsr);let pv=vsr.split('-');if(pv.length===2){let ms=pv[1].replace('л','').replace(/,/g,'.').trim(),mv=parseFloat(ms);if(!isNaN(mv))vb.push({max:mv,key:vsr})}else if(vsr.includes('более')){vb.push({max:99999,key:vsr})}}}if(c>0){vb.sort((a,b)=>a.max-b.max);_s('ozon_vol_bands',vb);_s('ozon_matrix_cache',m);alert(`成功提取 ${c} 条路线。`);document.getElementById('csvPasteArea').value='';document.getElementById('pasteModal').style.display='none';updateOzonDbStatus();calculateAll()}else{alert('有效行数为0。')}}catch(e){alert('错误：'+e.message)}}
+
+window.calculateAll=function(){try{let pc=_v('productCost'),er=_v('exchangeRate'),l=_v('length'),w=_v('width'),h=_v('height'),vol=(l*w*h)/1000;_f('volume',vol,!0);let uc=pc*er;_f('unitCost',uc);let fp=0,ftd=0;if(_cP==='WB'){let p=_v('wb_price');fp=p;let bp=p*(1-_v('wb_discount')/100);_f('wb_buyerPrice',bp);let cf=p*(_v('wb_commissionRate')/100);_f('wb_commissionFee',cf);let bkf=p*0.015;_f('wb_bankFee',bkf);let loc=_wM[document.getElementById('wb_locIndex').value]||{r:1,k:0};_f('wb_krpRatio',loc.k*100,!0);let fm=_v('wb_fbwMultiplier')||1,sm=document.getElementById('wb_shippingMethod').value,br=_v('wb_baseRate'),or=_v('wb_over1LRate'),lf=0;if(vol>0&&vol<1){let svb=vol<=0.2?23:vol<=0.4?26:vol<=0.6?29:30;lf=vol*svb}else{let ev=vol>1?vol-1:0;lf=br+(ev*or)}if(sm==='FBW')lf*=fm;_f('wb_logisticsFee',lf);let rf=br+((vol>1?vol-1:0)*or);_f('wb_reverseFee',rf);let tj=(loc.r*lf)+(p*loc.k);_f('wb_totalJourney',tj);let dr=_v('wb_deliveryRate');if(dr<=0)dr=100;let tlc=(100/dr)*tj+((100/dr)-1)*rf;_f('wb_totalLogisticsCost',tlc);_f('wb_logRatio',p>0?((tlc/p)*100):0,!0);let af=p*(_v('wb_adRate')/100);_f('wb_adFee',af);let uf=p*0.01;_f('wb_unallocatedFee',uf);let fsf=_v('wb_storagePerL')*fm*vol*30;_f('wb_fbwStorageFee',fsf);ftd=cf+bkf+tlc+af+uf+fsf;_f('wb_wbTotalDeduction',ftd);_f('wb_wbDeductionRatio',p>0?((ftd/p)*100):0,!0)}else if(_cP==='Ozon'){let p=_v('ozon_price');fp=p;let bp=p*(1-_v('ozon_discount')/100);_f('ozon_buyerPrice',bp);let cf=p*(_v('ozon_commissionRate')/100);_f('ozon_commissionFee',cf);let bkf=p*0.015;_f('ozon_bankFee',bkf);let md=document.getElementById('ozon_shippingMethod').value,fc=document.getElementById('ozon_fromCluster').value,tc=document.getElementById('ozon_toCluster').value,ep=document.getElementById('ozon_processing_container'),ec=document.getElementById('ozon_crossMarkup_container');if(ep){ep.style.opacity=md==='FBO'?'0.4':'1';ep.style.pointerEvents=md==='FBO'?'none':'auto'}if(ec){ec.style.opacity=md==='FBS'?'0.4':'1';ec.style.pointerEvents=md==='FBS'?'none':'auto'}let fs=_gf(vol,p,fc,tc);_f('ozon_fwdSort',fs);let cm=0;if(md==='FBO'&&fc!==tc){let r=_oR[tc]||0;cm=p*r}_f('ozon_crossMarkup',cm);let lm=_v('ozon_lastMile'),pr=md==='FBS'?_v('ozon_processing'):0,rp=_v('ozon_returnProcessing'),ft=fs+cm+pr+lm;_f('ozon_forwardTotal',ft);let rs=_gf(vol,p,tc,tc),rt=rp+rs;_f('ozon_reverseTotal',rt);let dr=_v('ozon_deliveryRate');if(dr<=0)dr=100;let tlc=(100/dr)*ft+((100/dr)-1)*rt;_f('ozon_totalLogisticsCost',tlc);_f('ozon_logRatio',p>0?((tlc/p)*100):0,!0);let af=p*(_v('ozon_adRate')/100);_f('ozon_adFee',af);let uf=p*0.01;_f('ozon_unallocatedFee',uf);let fsf=_v('ozon_storagePerL')*vol*30;_f('ozon_fboStorageFee',fsf);ftd=cf+bkf+tlc+af+uf+fsf;_f('ozon_wbTotalDeduction',ftd);_f('ozon_wbDeductionRatio',p>0?((ftd/p)*100):0,!0)}let to=_tM[document.getElementById('taxSystem').value];_f('taxRateDisp',to.b);_f('vatRateDisp',to.v);let btr=0;if(to.t==='s'){btr=fp*(to.b/100)}else if(to.t==='p'){let tp=fp-ftd;btr=tp>0?tp*(to.b/100):0}let vr=fp*(to.v/100),tr=btr+vr;_f('taxRub',tr);let fmf=fp*0.03;_f('finalMiscFee',fmf);let lb=fp-ftd-tr,lr=lb>0?lb*(_v('lossRate')/100):0;_f('lossRub',lr);let tuc=uc+ftd+tr+fmf+lr;_f('totalUnitCost',tuc);let prb=fp-tuc;_f('profitRub',prb);let prm=er>0?prb/er:0;_f('profitRmb',prm,!0);let nm=fp>0?(prb/fp)*100:0;_f('netMargin',nm,!0);let rr=uc>0?(prb/uc)*100:0;_f('roiRate',rr,!0);let il=prb<0,pBox1=document.getElementById('profitRubBox');if(pBox1)pBox1.className='result-box text-left-input '+(il?'res-solid-red':'res-solid-green');let pBox2=document.getElementById('profitRmbBox');if(pBox2)pBox2.className='result-box text-left-input '+(il?'res-solid-red':'res-solid-green');let mBox=document.getElementById('marginBox');if(mBox)mBox.className='progress-box '+(il?'text-red-alert':'');let mBar=document.getElementById('marginBar');if(mBar){mBar.className='progress-bar '+(il?'bar-red':'bar-green');mBar.style.width=Math.min(Math.abs(nm),100)+'%'}let rBox=document.getElementById('roiBox');if(rBox)rBox.className='progress-box '+(il?'text-red-alert':'');let rBar=document.getElementById('roiBar');if(rBar){rBar.className='progress-bar '+(il?'bar-red':'bar-green');rBar.style.width=Math.min(Math.abs(rr),100)+'%'}}catch(e){console.error(e)}}
+window.loadTemplateDropdown=function(){let t=_g('erp_templates'),s=document.getElementById('templateSelect');if(!s)return;s.innerHTML='<option value="">-- 参数模板 --</option>';for(let k in t){let o=document.createElement('option');o.value=k;o.textContent=k;s.appendChild(o)}}
+window.saveAsTemplate=function(){let n=prompt("请输入新模板名称:");if(!n||!n.trim())return;n=n.trim();let td={},ts=_g('erp_templates');_tF.forEach(id=>{let e=document.getElementById(id);td[id]=e?e.value:''});ts[n]=td;_s('erp_templates',ts);loadTemplateDropdown();let s=document.getElementById('templateSelect');if(s)s.value=n;alert('模板保存成功！')}
+window.applyTemplate=function(){let s=document.getElementById('templateSelect');if(!s)return;let n=s.value;if(!n){alert('请先选择模板！');return}let ts=_g('erp_templates'),td=ts[n];if(td){for(let k in td){let e=document.getElementById(k);if(e)e.value=td[k]}calculateAll()}}
+window.deleteTemplate=function(){let s=document.getElementById('templateSelect');if(!s)return;let n=s.value;if(!n)return;if(confirm('确定删除模板吗？')){let ts=_g('erp_templates');delete ts[n];_s('erp_templates',ts);loadTemplateDropdown()}}
+window.showDashboard=function(){document.getElementById('dashboardView').style.display='block';document.getElementById('detailView').style.display='none';renderTable()}
+window.togglePlatformView=function(p){_cP=p;let b=document.getElementById('currentPlatBadge');if(b){b.innerText=p.toUpperCase();b.className='plat-tag '+(p==='WB'?'tag-wb':'tag-ozon')}let wr=document.getElementById('wb-right-engine');if(wr)wr.style.display=(p==='WB')?'block':'none';let or=document.getElementById('ozon-right-engine');if(or)or.style.display=(p==='Ozon')?'block':'none'}
+window.createNewProduct=function(p){_cI=Date.now().toString();togglePlatformView(p||'WB');document.querySelectorAll('input[type="number"], input[type="text"]').forEach(e=>{if(e.id!=='skuFilter'&&e.id!=='csvPasteArea')e.value=''});document.getElementById('skuName').value='';document.getElementById('templateSelect').value='';calculateAll();document.getElementById('dashboardView').style.display='none';document.getElementById('detailView').style.display='block'}
+window.editProduct=function(id){_cI=id;let ps=_g('erp_products'),pd=ps[id];if(pd){togglePlatformView(pd.platform||'WB');document.getElementById('skuName').value=pd.sku||'';for(let k in pd.fields){let e=document.getElementById(k);if(e)e.value=pd.fields[k]}document.getElementById('templateSelect').value='';calculateAll();document.getElementById('dashboardView').style.display='none';document.getElementById('detailView').style.display='block'}}
+window.deleteProduct=function(id){if(confirm('确定删除该方案吗？')){let ps=_g('erp_products');delete ps[id];_s('erp_products',ps);renderTable()}}
+
+// 💡 修复：保存逻辑兼容 Div 值的读取
+window.saveProduct=function(){try{let se=document.getElementById('skuName');if(!se||!se.value.trim()){alert('提示：请先在上方填写 SKU 或产品名称！');return}let sn=se.value.trim(),fd={};_tF.forEach(id=>{let e=document.getElementById(id);fd[id]=e?e.value:''});['productCost','exchangeRate','length','width','height','wb_price','ozon_price'].forEach(id=>{let e=document.getElementById(id);if(e)fd[id]=e.value});let pre=_cP==='WB'?'wb_':'ozon_',ps=_g('erp_products')||{},sv=function(i){let e=document.getElementById(i);return e?(e.tagName==='INPUT'||e.tagName==='SELECT'?e.value:e.innerText):'0'};ps[_cI]={platform:_cP,sku:sn,ts:Date.now(),fields:fd,summary:{price:sv(pre+'price'),platformCommission:sv(pre+'commissionFee'),totalLogisticsCost:sv(pre+'totalLogisticsCost'),wbTotalDeduction:sv(pre+'wbTotalDeduction'),wbDeductionRatio:sv(pre+'wbDeductionRatio'),profitRmb:sv('profitRmb'),netMargin:sv('netMargin'),roiRate:sv('roiRate')}};_s('erp_products',ps);showDashboard()}catch(e){alert('保存失败: '+e.message)}}
+
+window.renderTable=function(){let tb=document.getElementById('tableBody');if(!tb)return;try{let ps=_g('erp_products')||{};tb.innerHTML='';let ks=Object.keys(ps);if(ks.length===0){tb.innerHTML='<tr><td colspan="11" style="text-align:center; color:#9ca3af; padding: 4rem;">暂无核算数据，请点击上方平台卡片新建</td></tr>';return}let a=ks.map(k=>({id:k,...(ps[k]||{})}));a.sort((x,y)=>(y.ts||y.timestamp||0)-(x.ts||x.timestamp||0));let pf=document.getElementById('platformFilter').value,sf=document.getElementById('skuFilter').value.toLowerCase();a=a.filter(p=>{let pl=p.platform||'WB';return(pf==='All'||pl===pf)&&(p.sku||'').toLowerCase().includes(sf)});if(a.length===0){tb.innerHTML='<tr><td colspan="11" style="text-align:center; color:#9ca3af; padding: 4rem;">未能检索到符合条件的数据</td></tr>';return}a.forEach(p=>{let s=p.summary||{},pl=p.platform||'WB',pt=pl==='WB'?'<span class="plat-tag tag-wb">WB</span>':'<span class="plat-tag tag-ozon">OZON</span>';let profit=parseFloat(s.profitRmb)||0,c=profit<0?'text-loss':'text-profit',cd=s.platformCommission||s.wbCommissionFee||'0';let tr=document.createElement('tr');tr.innerHTML=`<td>${pt}</td><td style="font-weight: 700;">${p.sku||'未知'}</td><td>₽ ${s.price||'0'}</td><td>₽ ${cd}</td><td>₽ ${s.totalLogisticsCost||'0'}</td><td>₽ ${s.wbTotalDeduction||'0'}</td><td>${s.wbDeductionRatio||'0'} %</td><td class="${c}">¥ ${s.profitRmb||'0'}</td><td class="${c}">${s.netMargin||'0'} %</td><td class="${c}">${s.roiRate||'0'} %</td><td><div style="display:flex; justify-content:center; gap:0.5rem;"><button class="btn btn-outline" style="padding:0.35rem 0.85rem;" onclick="editProduct('${p.id}')">编辑</button> <button class="btn btn-danger-outline" style="padding:0.35rem 0.85rem;" onclick="deleteProduct('${p.id}')">删除</button></div></td>`;tb.appendChild(tr)})}catch(e){tb.innerHTML='<tr><td colspan="11" style="text-align:center; color:red;">渲染列表失败，请点击清理缓存</td></tr>'}}
+window.clearAllData=function(){if(confirm('警告：这会彻底清空所有产品、模板以及导出的数据！确定吗？')){localStorage.removeItem('erp_products');localStorage.removeItem('erp_templates');localStorage.removeItem('ozon_matrix_cache');localStorage.removeItem('ozon_vol_bands');alert('清理完毕！页面即将刷新。');location.reload()}}
+window.exportData=function(){let p=_g('erp_products'),t=_g('erp_templates');if(Object.keys(p).length===0&&Object.keys(t).length===0){alert('没有数据可导出！');return}let b=new Blob([JSON.stringify({products:p,templates:t})],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`双核定价系统备份_${new Date().toISOString().slice(0, 10)}.json`;a.click()}
+window.importData=function(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=function(x){try{let j=JSON.parse(x.target.result);if(j.products){_s('erp_products',j.products);if(j.templates)_s('erp_templates',j.templates)}else{_s('erp_products',j)}alert('数据导入成功！');loadTemplateDropdown();renderTable()}catch(err){alert('文件格式错误！导入失败。')}};r.readAsText(f)}
+window.onload=function(){updateOzonDbStatus();loadTemplateDropdown();renderTable();let m=_g('ozon_matrix_cache');if(!m||Object.keys(m).length===0){let md=document.getElementById('pasteModal');if(md)md.style.display='block'}};
 </script>
 </body>
 </html>
