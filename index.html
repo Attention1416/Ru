@@ -5,204 +5,235 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>全链路产品定价核算 ERP</title>
     
-    <!-- 引入全球顶级字体库 -->
+    <!-- 引入全球顶级字体库与图标 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入网页截图引擎 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
-        /* ==================== 极简白灰对比 + Apple级大圆角 ==================== */
+        /* ==================== 顶级灵动微质感 UI 架构 ==================== */
         :root {
-            /* 极简纯白背景，灰色卡片，纯白输入框形成空间层级 */
-            --bg-color: #ffffff;           
-            --card-bg: #f1f5f9;            
-            --border-color: #e2e8f0;       
+            /* 背景色系 */
+            --bg-body: #f1f5f9;
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --header-bg: #0f172a;
+            --header-text: #f8fafc;
             
-            --input-bg: #ffffff;           
-            --input-border: #cbd5e1;       
-            --input-hover: #f8fafc;
+            /* 边框与投影 */
+            --border-light: rgba(226, 232, 240, 0.8);
+            --border-base: #cbd5e1;
+            --border-active: #94a3b8;
+            --shadow-card: 0 10px 30px -10px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,1);
+            --shadow-float: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,1);
             
-            /* Apple 级温润包裹大圆角 */
-            --radius-card: 24px;      
-            --radius-input: 16px;     
-            --radius-btn: 12px;       
-
+            /* 文本色系 */
             --text-main: #0f172a;
             --text-label: #475569;
-            --text-placeholder: #94a3b8;
+            --text-muted: #94a3b8;
+            --focus-ring: rgba(99, 102, 241, 0.25);
+            --focus-border: #4f46e5;
             
-            --color-wb: #cb11ab; 
-            --color-ozon: #005bff; 
-            
-            --color-indigo-50: #eef2ff; --color-indigo-500: #6366f1;
-            --color-emerald-50: #ecfdf5; --color-emerald-500: #10b981;
-            --color-amber-50: #fffbeb; --color-amber-500: #f59e0b;
-            --color-rose-50: #fff1f2; --color-rose-500: #f43f5e;
-            --color-teal-50: #f0fdfa; --color-teal-600: #0d9488;
-            --color-red-50: #fef2f2; --color-red-600: #dc2626;
-            --color-orange-50: #fff7ed;
+            /* 品牌色系 */
+            --color-wb: #cb11ab;
+            --color-ozon: #005bff;
+            --color-indigo-500: #6366f1;
+            --color-emerald-500: #10b981;
+            --color-amber-500: #f59e0b;
+            --color-rose-500: #f43f5e;
+            --color-teal-600: #0d9488;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', 'Noto Sans SC', sans-serif; background-color: var(--bg-color); min-height: 100vh; color: var(--text-main); -webkit-font-smoothing: antialiased; }
+        
+        body { 
+            font-family: 'Inter', 'Noto Sans SC', sans-serif; 
+            background-color: var(--bg-body); 
+            min-height: 100vh; 
+            color: var(--text-main); 
+            -webkit-font-smoothing: antialiased;
+            position: relative; z-index: 0;
+            user-select: none;
+        }
         
         input, select, textarea { user-select: auto; }
-        
-        .container { width: 98%; max-width: 1800px; margin: 0 auto; padding: 1.5rem 1rem; }
+
+        /* 幻彩弥散背景光 */
+        body::before { content: ''; position: fixed; top: -10%; left: -10%; width: 50vw; height: 50vh; background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 60%); z-index: -1; pointer-events: none; }
+        body::after { content: ''; position: fixed; bottom: -10%; right: -10%; width: 50vw; height: 50vh; background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 60%); z-index: -1; pointer-events: none; }
         
         /* 沉浸式顶栏 */
-        .top-nav { background-color: #0f172a; color: #ffffff; padding: 1.25rem 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-        .nav-content { width: 98%; max-width: 1600px; margin: 0 auto; padding: 0 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;}
-        .header-title h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; margin: 0; color: #fff;}
-        .nav-actions { display: flex; gap: 1rem; flex-wrap: wrap;}
+        .top-nav { background-color: var(--header-bg); color: var(--header-text); padding: 1.25rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .nav-content { width: 98%; max-width: 1600px; margin: 0 auto; padding: 0 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .header-title h1 { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; margin: 0; color: #fff;}
+        .nav-actions { display: flex; gap: 1rem; }
 
-        /* 统一按键交互 (柔和大圆角，强制防挤压变形) */
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.6rem 1.4rem; border-radius: var(--radius-btn); font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.15s ease; border: 1px solid transparent; outline: none; white-space: nowrap; flex-shrink: 0; }
+        /* 统一按键交互 */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.6rem 1.25rem; border-radius: 10px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.15s ease; border: 1px solid transparent; outline: none; }
         .btn:active { transform: translateY(1px); }
-        .btn-primary { background-color: #4f46e5; color: white; } .btn-primary:hover { background-color: #4338ca; }
-        .btn-outline { background-color: #ffffff; border-color: var(--input-border); color: var(--text-main); } .btn-outline:hover { background-color: #f8fafc; border-color: #94a3b8; }
-        .btn-success { background-color: #10b981; color: white; } .btn-success:hover { background-color: #059669; }
-        .btn-warning { background-color: var(--color-amber-500); color: white; } .btn-warning:hover { background-color: #d97706; }
-        
-        .btn-nav { background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: #f1f5f9; backdrop-filter: blur(4px);}
+        .btn:focus-visible { box-shadow: 0 0 0 2px var(--bg-body), 0 0 0 4px var(--focus-border); }
+        .btn-primary { background-color: #4f46e5; color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .btn-primary:hover { background-color: #4338ca; }
+        .btn-outline { background-color: #ffffff; border-color: var(--border-base); color: var(--text-label); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .btn-outline:hover { background-color: #f8fafc; border-color: var(--border-active); color: var(--text-main); }
+        .btn-success { background-color: #10b981; color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .btn-success:hover { background-color: #059669; }
+        .btn-nav { background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); color: #e2e8f0; backdrop-filter: blur(4px);}
         .btn-nav:hover { background-color: rgba(255,255,255,0.2); color: #fff; }
         .btn-nav-danger { background-color: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: #fca5a5; }
         .btn-nav-danger:hover { background-color: #ef4444; color: #fff; }
 
-        /* 平台选择引擎 */
-        .platform-selector { display: flex; gap: 2rem; margin-bottom: 2.5rem; justify-content: center; flex-wrap: wrap; }
-        .platform-card { flex: 1; min-width: 300px; max-width: 420px; border-radius: var(--radius-card); padding: 2.5rem 2rem; cursor: pointer; transition: transform 0.2s ease; text-align: center; color: white; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); }
-        .platform-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .card-wb { background: linear-gradient(135deg, #cb11ab 0%, #8b00ff 100%); }
-        .card-ozon { background: linear-gradient(135deg, #005bff 0%, #003b99 100%); }
-        .logo-wb { font-size: 3rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 0.5rem; font-family: 'Arial Black', Impact, sans-serif; }
-        .logo-ozon { font-size: 3.5rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 0; font-family: 'Arial Black', Impact, sans-serif; }
-        .platform-card .sub-text { font-size: 1.05rem; font-weight: 700; opacity: 0.95; margin-top: 0.5rem; }
+        .container { width: 98%; max-width: 1600px; margin: 0 auto; padding: 2rem 1rem; }
 
-        .plat-tag { padding: 0.35rem 0.8rem; border-radius: 8px; font-size: 0.8rem; font-weight: 800; color: white; display: inline-flex; align-items: center; letter-spacing: 0.5px; white-space: nowrap; flex-shrink: 0;}
+        /* 平台选择引擎 (超柔和圆角) */
+        .platform-selector { display: flex; gap: 2rem; margin-bottom: 2.5rem; justify-content: center; flex-wrap: wrap; }
+        .platform-card { flex: 1; min-width: 300px; max-width: 420px; border-radius: 24px; padding: 2.5rem 2rem; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); text-align: center; color: white; box-shadow: var(--shadow-card); border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden;}
+        .platform-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-float); }
+        .card-wb { background: linear-gradient(135deg, #d926b9 0%, #8b00ff 100%); }
+        .card-ozon { background: linear-gradient(135deg, #1a6dff 0%, #003b99 100%); }
+        .logo-wb { font-size: 3rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 0.5rem; font-family: 'Arial Black', Impact, sans-serif; text-shadow: 0 2px 4px rgba(0,0,0,0.2); position: relative; z-index: 2;}
+        .logo-ozon { font-size: 3.5rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 0; font-family: 'Arial Black', Impact, sans-serif; text-shadow: 0 2px 4px rgba(0,0,0,0.2); position: relative; z-index: 2;}
+        .platform-card .sub-text { font-size: 1rem; font-weight: 600; opacity: 0.95; margin-top: 0.5rem; position: relative; z-index: 2;}
+
+        .plat-tag { padding: 0.25rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 800; color: white; display: inline-flex; align-items: center; letter-spacing: 0.5px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);}
         .tag-wb { background-color: var(--color-wb); }
         .tag-ozon { background-color: var(--color-ozon); }
 
-        /* 实体精密灰底面板 (24px超大圆角) */
-        .card { background: var(--card-bg); border-radius: var(--radius-card); border: 1px solid var(--border-color); padding: 1.75rem 2rem; margin-bottom: 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);}
-        .card-title { font-size: 1.2rem; font-weight: 800; display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; color: var(--text-main); }
-        
-        /* 核心修复：防止竖条指示器被挤压缩小消失 */
-        .card-title-indicator { width: 6px !important; min-width: 6px !important; height: 22px !important; border-radius: 3px; flex-shrink: 0 !important; display: inline-block; }
-        
-        .sub-module-title { font-size: 1rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1.25rem; padding-top: 1.5rem; border-top: 1px dashed var(--input-border); color: var(--text-main); }
+        /* 实体精密面板 */
+        .card { background: var(--card-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 20px; box-shadow: var(--shadow-card); border: 1px solid var(--border-light); padding: 1.75rem 2rem; margin-bottom: 0; }
+        .card-title { font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.5rem; color: var(--text-main); }
+        /* 强制指示条防压缩 */
+        .card-title-indicator { width: 6px !important; min-width: 6px !important; height: 18px !important; border-radius: 3px; flex-shrink: 0 !important; display: inline-block; }
+        .sub-module-title { font-size: 0.95rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--border-light); color: var(--text-main); position: relative; z-index: 2;}
 
         /* 网格对齐系统 */
-        .input-row { display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: stretch; margin-bottom: 1.25rem; }
-        .result-row { display: flex; flex-wrap: wrap; gap: 1.25rem; padding-top: 0.5rem; }
+        .input-row { display: flex; flex-wrap: wrap; gap: 1rem; align-items: stretch; margin-bottom: 1rem; position: relative; z-index: 2;}
+        .result-row { display: flex; flex-wrap: wrap; gap: 1rem; padding-top: 0.5rem; position: relative; z-index: 2;}
 
-        /* 填写框（纯白对比 + 16px 圆角） */
-        .input-group { background: var(--input-bg); border-radius: var(--radius-input); padding: 0.75rem 1rem; display: flex; flex-direction: column; justify-content: center; transition: border-color 0.2s ease; flex: 1; min-width: 140px; border: 1px solid var(--input-border); }
-        .input-group:hover { border-color: #94a3b8; }
-        .input-group:focus-within { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15); }
-        .input-group label { font-size: 0.8rem; font-weight: 700; color: var(--text-label); margin-bottom: 0.4rem; text-transform: uppercase; white-space: nowrap; letter-spacing: 0.5px;}
-        .input-wrapper { display: flex; align-items: center; gap: 0.5rem; position: relative; width: 100%;}
+        /* 输入控件 */
+        .input-group { background: #ffffff; border-radius: 12px; padding: 0.6rem 0.85rem; display: flex; flex-direction: column; justify-content: center; transition: all 0.2s ease; flex: 1; min-width: 140px; border: 1px solid var(--border-base); box-shadow: 0 1px 2px rgba(0,0,0,0.02);}
+        .input-group:hover { border-color: var(--border-active); }
+        .input-group:focus-within { border-color: var(--focus-border); box-shadow: 0 0 0 3px var(--focus-ring); }
+        .input-group label { font-size: 0.75rem; font-weight: 600; color: var(--text-label); margin-bottom: 0.35rem; }
         
-        .symbol { font-weight: 700; color: var(--text-muted); font-size: 1rem; }
-        /* 核心修复：全部靠左对齐 */
-        input[type="number"], input[type="text"], .value-display { background: transparent; border: none; font-size: 1.2rem; font-weight: 800; color: var(--text-main); outline: none; width: 100%; min-width: 2rem; text-align: left; font-family: 'Inter', monospace; font-variant-numeric: tabular-nums;}
-        input::placeholder { color: var(--text-placeholder); font-weight: 500; }
+        .input-wrapper { display: flex; align-items: center; gap: 0.4rem; position: relative; width: 100%;}
+        .symbol { font-weight: 600; color: var(--text-muted); font-size: 0.95rem; }
+        
+        /* 🔥 统一靠左对齐，拒绝居右 */
+        input[type="number"], input[type="text"], .value-display, .value-readonly { 
+            background: transparent; border: none; font-size: 1.1rem; font-weight: 700; color: var(--text-main); 
+            outline: none; width: 100%; min-width: 2rem; 
+            text-align: left !important; /* 强制靠左 */
+            font-family: 'Inter', monospace; font-variant-numeric: tabular-nums; 
+            display: flex; align-items: center; justify-content: flex-start !important; 
+        }
+        input::placeholder { color: var(--border-active); font-weight: 400; }
         
         /* 尺寸复合输入框 */
-        .combo-group { background: var(--input-bg); border-radius: var(--radius-input); padding: 0.75rem 1rem; display: flex; flex-direction: column; justify-content: center; flex: 1; min-width: 260px; transition: border-color 0.2s ease; border: 1px solid var(--input-border); }
-        .combo-group:hover { border-color: #94a3b8; }
-        .combo-group:focus-within { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15); }
-        .combo-group label { font-size: 0.8rem; font-weight: 700; color: var(--text-label); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px;}
+        .combo-group { background: #ffffff; border-radius: 12px; padding: 0.6rem 0.85rem; display: flex; flex-direction: column; justify-content: center; flex: 1; min-width: 260px; transition: all 0.2s ease; border: 1px solid var(--border-base); box-shadow: 0 1px 2px rgba(0,0,0,0.02);}
+        .combo-group:hover { border-color: var(--border-active); }
+        .combo-group:focus-within { border-color: var(--focus-border); box-shadow: 0 0 0 3px var(--focus-ring); }
+        .combo-group label { font-size: 0.75rem; font-weight: 600; color: var(--text-label); margin-bottom: 0.35rem; }
         .combo-inputs { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
-        .combo-inputs input { width: 30%; text-align: center; font-size: 1.2rem; font-weight: 800; color: var(--text-main); font-family: 'Inter', monospace; font-variant-numeric: tabular-nums;}
-        .multiply-sign { font-size: 1rem; font-weight: 700; color: var(--text-muted); }
+        .combo-inputs input { width: 30%; text-align: center !important; font-size: 1.1rem; font-weight: 700; color: var(--text-main); font-family: 'Inter', monospace; font-variant-numeric: tabular-nums;}
+        .multiply-sign { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
 
-        select { background: transparent; border: none; font-size: 1.05rem; font-weight: 700; color: var(--text-main); outline: none; width: 100%; appearance: none; cursor: pointer; padding-right: 1.5rem; text-overflow: ellipsis; white-space: nowrap;}
+        select { background: transparent; border: none; font-size: 0.95rem; font-weight: 600; color: var(--text-main); outline: none; width: 100%; appearance: none; cursor: pointer; padding-right: 1.5rem; text-overflow: ellipsis; white-space: nowrap;}
         .select-wrapper { position: relative; display: flex; align-items: center; width: 100%;}
         .select-wrapper::after { content: "▼"; font-size: 0.6rem; position: absolute; right: 0; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-muted); }
 
-        /* 防裁切底层渲染架构 (16px 圆角) */
-        .result-box { border-radius: var(--radius-input); padding: 1rem 1.25rem; display: flex; flex-direction: column; justify-content: center; flex: 1; min-width: 150px; border: 1px solid transparent; transition: all 0.2s ease; background: #fff;}
-        .result-box label { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.2; letter-spacing: 0.02em;}
-        /* 核心修复：数值左对齐 */
-        .value-display { flex: 1; font-size: 1.6rem; font-weight: 900; text-align: left; font-family: 'Inter', monospace; font-variant-numeric: tabular-nums; letter-spacing: -0.03em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; justify-content: flex-start;}
+        /* 防裁切底层渲染架构 */
+        .result-box { border-radius: 12px; padding: 0.85rem 1rem; display: flex; flex-direction: column; justify-content: center; flex: 1; min-width: 150px; border: 1px solid transparent; transition: all 0.2s ease; background: #fff;}
+        .result-box label { font-size: 0.8rem; font-weight: 600; margin-bottom: 0.4rem; line-height: 1.2; letter-spacing: 0.02em;}
         
-        .text-left-input .input-wrapper { display: flex; justify-content: flex-start; align-items: center; gap: 0.3rem; }
-        .text-left-input .value-display { justify-content: flex-start; text-align: left; }
-
         .bg-indigo { background-color: var(--color-indigo-500); } .bg-emerald { background-color: var(--color-emerald-500); } .bg-amber { background-color: var(--color-amber-500); } .bg-rose { background-color: var(--color-rose-500); } .bg-ozon { background-color: var(--color-ozon); } .bg-teal { background-color: var(--color-teal-600); }
         
-        /* 自动计算模块的柔和色彩 */
-        .res-tint-blue { background: #eff6ff; border-color: #bfdbfe; } .res-tint-blue label { color: #1e40af; } .res-tint-blue .symbol { color: #60a5fa; } .res-tint-blue .value-display { color: #1e3a8a; }
-        .res-tint-red { background: #fef2f2; border-color: #fecaca; } .res-tint-red label { color: #991b1b; } .res-tint-red .symbol { color: #f87171; } .res-tint-red .value-display { color: #7f1d1d; }
-        .res-tint-amber { background: #fffbeb; border-color: #fde68a; } .res-tint-amber label { color: #92400e; } .res-tint-amber .symbol { color: #fbbf24; } .res-tint-amber .value-display { color: #78350f; }
-        .res-tint-teal { background: #f0fdfa; border-color: #99f6e4; } .res-tint-teal label { color: #115e59; } .res-tint-teal .symbol { color: #2dd4bf; } .res-tint-teal .value-display { color: #134e4a; }
-        .res-tint-gray { background: #ffffff; border-color: var(--input-border); } .res-tint-gray label { color: #475569; } .res-tint-gray .value-display { color: #0f172a; }
+        /* 高级色彩渐变与基罩 */
+        .res-tint-blue { background: #eff6ff; border-color: #bfdbfe; }
+        .res-tint-blue label { color: #1e40af; } .res-tint-blue .symbol { color: #60a5fa; } .res-tint-blue .value-display, .res-tint-blue input { color: #1e3a8a !important; }
+        .res-tint-red { background: #fef2f2; border-color: #fecaca; }
+        .res-tint-red label { color: #991b1b; } .res-tint-red .symbol { color: #f87171; } .res-tint-red .value-display, .res-tint-red input { color: #7f1d1d !important; }
+        .res-tint-amber { background: #fffbeb; border-color: #fde68a; }
+        .res-tint-amber label { color: #92400e; } .res-tint-amber .symbol { color: #fbbf24; } .res-tint-amber .value-display, .res-tint-amber input { color: #78350f !important; }
+        .res-tint-teal { background: #f0fdfa; border-color: #99f6e4; }
+        .res-tint-teal label { color: #115e59; } .res-tint-teal .symbol { color: #2dd4bf; } .res-tint-teal .value-display, .res-tint-teal input { color: #134e4a !important; }
+        .res-tint-gray { background: #f8fafc; border-color: #e2e8f0; }
+        .res-tint-gray label { color: #475569; } .res-tint-gray .value-display, .res-tint-gray input { color: #0f172a !important; }
 
-        /* 高饱和实色块 (最终利润专用) */
-        .res-solid-green { background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important; border: none !important; box-shadow: 0 6px 15px rgba(16, 185, 129, 0.25) !important; } .res-solid-green label, .res-solid-green .symbol, .res-solid-green .value-display { color: #ffffff !important; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-        .res-solid-red { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important; border: none !important; box-shadow: 0 6px 15px rgba(239, 68, 68, 0.25) !important; } .res-solid-red label, .res-solid-red .symbol, .res-solid-red .value-display { color: #ffffff !important; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        /* 高饱和实色块 */
+        .res-solid-green { background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important; border: none !important; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3) !important; }
+        .res-solid-green label, .res-solid-green .symbol, .res-solid-green .value-display, .res-solid-green input { color: #ffffff !important; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        .res-solid-red { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important; border: none !important; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3) !important; }
+        .res-solid-red label, .res-solid-red .symbol, .res-solid-red .value-display, .res-solid-red input { color: #ffffff !important; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
 
-        .res-small { padding: 0.85rem 1.2rem; } .res-small .value-display { font-size: 1.35rem; }
+        /* 专门适配结果展示大字体 (且强制靠左) */
+        .res-small { padding: 0.75rem 1rem; } 
+        .res-small .value-display, .res-small input { font-size: 1.5rem; text-align: left !important; }
+
+        /* 品牌巨型底纹水印 */
+        #wb-module-2, #ozon-module-2 { position: relative; overflow: hidden; }
+        #wb-module-2::after { content: 'W B'; position: absolute; right: -5px; bottom: -20px; font-size: 150px; font-weight: 900; color: var(--color-wb); opacity: 0.03; z-index: 1; pointer-events: none; line-height: 1; font-family: 'Arial Black', Impact, sans-serif;}
+        #ozon-module-2::after { content: 'O Z'; position: absolute; right: -5px; bottom: -20px; font-size: 150px; font-weight: 900; color: var(--color-ozon); opacity: 0.03; z-index: 1; pointer-events: none; line-height: 1; font-family: 'Arial Black', Impact, sans-serif;}
 
         /* 布局栅格 */
         .detail-grid { display: grid; grid-template-columns: 32% 66%; gap: 1.5rem; margin-bottom: 1.5rem; align-items: start; }
         @media (max-width: 1200px) { .detail-grid { grid-template-columns: 1fr; } }
         .col-left, .col-right { display: flex; flex-direction: column; gap: 1.5rem; }
 
-        /* 详情控制条 (24px 大圆角) */
-        .action-bar { background: var(--card-bg); border-radius: var(--radius-card); padding: 1.25rem 2rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; border: 1px solid var(--border-color); flex-wrap: wrap; gap: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);}
+        /* 详情控制条 */
+        .action-bar { background: var(--card-bg); backdrop-filter: blur(16px); border-radius: 16px; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; box-shadow: var(--shadow-card); border: 1px solid var(--border-light); flex-wrap: wrap; gap: 1rem;}
         
-        .sku-input { background: #ffffff; border: 1px solid var(--input-border); border-radius: var(--radius-btn); padding: 0.75rem 1.25rem; font-size: 1.1rem; font-weight: 700; color: var(--color-indigo-500); width: 300px; outline: none; transition: border-color 0.2s ease; }
-        .sku-input:focus { border-color: var(--focus-border); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15); }
+        .sku-input { background: #ffffff; border: 1px solid var(--border-base); border-radius: 10px; padding: 0.6rem 1rem; font-size: 1rem; font-weight: 700; color: var(--color-indigo-500); width: 280px; outline: none; transition: all 0.2s ease; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);}
+        .sku-input:focus { border-color: var(--focus-border); box-shadow: 0 0 0 3px var(--focus-ring); }
 
-        .template-group { display: flex; align-items: center; gap: 0.4rem; background: #ffffff; border: 1px solid var(--input-border); border-radius: var(--radius-btn); padding: 0.35rem 0.6rem; transition: border-color 0.2s ease; flex-wrap: wrap;}
-        .template-group:focus-within { border-color: var(--focus-border); }
-        .template-group select { border: none; background: transparent; font-size: 0.95rem; font-weight: 700; color: var(--color-indigo-500); width: 160px; padding-left: 0.5rem; outline: none; }
-        .btn-icon { border: none; background: transparent; padding: 0.5rem 0.85rem; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 700; transition: background 0.15s; color: var(--text-label); white-space: nowrap; flex-shrink: 0;}
-        .btn-icon:hover { background: #e2e8f0; color: var(--text-main); } 
+        .template-group { display: flex; align-items: center; gap: 0.5rem; background: #ffffff; border: 1px solid var(--border-base); border-radius: 10px; padding: 0.25rem 0.5rem; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.02);}
+        .template-group:focus-within { border-color: var(--focus-border); box-shadow: 0 0 0 3px var(--focus-ring); }
+        .template-group select { border: none; background: transparent; font-size: 0.9rem; font-weight: 600; color: var(--text-main); width: 150px; padding-left: 0.5rem; outline: none; }
+        .btn-icon { border: none; background: transparent; padding: 0.4rem 0.75rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.15s; color: var(--text-label);}
+        .btn-icon:hover { background: #f1f5f9; color: var(--text-main); } 
 
         /* 灵动呼吸光效进度条 */
         @keyframes gradient-x { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .progress-box { position: relative; overflow: hidden; background: #f8fafc; border: 1px solid var(--input-border); border-radius: var(--radius-input); padding: 1.5rem 1.75rem; display: flex; flex-direction: column; min-width: 160px; z-index: 1; }
+        .progress-box { position: relative; overflow: hidden; background: #f8fafc; border: 1px solid var(--border-light); border-radius: 12px; padding: 1.25rem 1.5rem; display: flex; flex-direction: column; min-width: 160px; z-index: 1; }
         .progress-bar { position: absolute; top: 0; left: 0; height: 100%; z-index: -1; transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
-        .progress-box label { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-label); }
+        .progress-box label { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-label); }
         
-        .progress-box .value-display { font-size: 2.5rem; font-weight: 900; color: var(--text-main); text-align: left; width: 100%; justify-content: flex-start; letter-spacing: -1px;}
-        #profitRubBox .value-display, #profitRmbBox .value-display, #wb_wbTotalDeduction .value-display, #ozon_wbTotalDeduction .value-display { font-size: 2.5rem; }
+        .progress-box .value-display, .progress-box input { font-size: 2.2rem; font-weight: 800; color: var(--text-main); width: 100%; letter-spacing: -1px; text-align: left !important; justify-content: flex-start !important;}
+        #profitRubBox .value-display, #profitRmbBox .value-display, #wb_wbTotalDeduction .value-display, #ozon_wbTotalDeduction .value-display { font-size: 2.2rem; }
 
         .bar-green { background-image: linear-gradient(90deg, rgba(16,185,129,0.7), rgba(52,211,153,0.2), rgba(16,185,129,0.7)) !important; background-size: 200% 100% !important; animation: gradient-x 2.5s ease-in-out infinite !important; }
         .bar-red { background-image: linear-gradient(90deg, rgba(239,68,68,0.8), rgba(248,113,113,0.3), rgba(239,68,68,0.8)) !important; background-size: 200% 100% !important; animation: gradient-x 2s ease-in-out infinite !important; }
-        .text-red-alert .value-display,.text-red-alert label { color: #b91c1c !important; }
+        .text-red-alert .value-display, .text-red-alert label, .text-red-alert input { color: #b91c1c !important; }
         
-        /* 快门动画冻结指令 */
+        /* 截图动画冻结指令 */
         .no-animation * { animation: none !important; transition: none !important; }
 
-        /* 表格区域 (24px 大圆角) */
-        .table-container { background: var(--card-bg); border-radius: var(--radius-card); padding: 2rem; border: 1px solid var(--border-color); overflow-x: auto; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);}
-        .filter-bar { display: flex; gap: 1.25rem; margin-bottom: 1.5rem; align-items: center; }
-        .filter-input { background: #ffffff; border: 1px solid var(--input-border); border-radius: var(--radius-btn); padding: 0.75rem 1.25rem; font-size: 1rem; font-weight: 600; color: var(--text-main); outline: none; transition: border-color 0.2s; width: 350px; }
-        .filter-input:focus { border-color: var(--focus-border); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15); }
-        .filter-select { background: #ffffff; border: 1px solid var(--input-border); border-radius: var(--radius-btn); padding: 0.75rem 1.25rem; font-size: 1rem; font-weight: 600; color: var(--text-main); outline: none; cursor: pointer; width: 220px; transition: border-color 0.2s; }
-        .filter-select:focus { border-color: var(--focus-border); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15); }
+        /* 表格区域 */
+        .table-container { background: var(--card-bg); border-radius: 20px; padding: 1.5rem; box-shadow: var(--shadow-card); border: 1px solid var(--border-light); overflow-x: auto;}
+        .filter-bar { display: flex; gap: 1rem; margin-bottom: 1.5rem; align-items: center; }
+        .filter-input { background: #ffffff; border: 1px solid var(--border-base); border-radius: 10px; padding: 0.6rem 1rem; font-size: 0.95rem; font-weight: 500; color: var(--text-main); outline: none; transition: all 0.2s ease; width: 320px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);}
+        .filter-input:focus { border-color: var(--focus-border); box-shadow: 0 0 0 3px var(--focus-ring); }
+        .filter-select { background: #ffffff; border: 1px solid var(--border-base); border-radius: 10px; padding: 0.6rem 1rem; font-size: 0.95rem; font-weight: 500; color: var(--text-main); outline: none; cursor: pointer; width: 200px; box-shadow: 0 1px 2px rgba(0,0,0,0.02); transition: all 0.2s ease;}
+        .filter-select:focus { border-color: var(--focus-border); box-shadow: 0 0 0 3px var(--focus-ring); }
 
-        table { width: 100%; border-collapse: collapse; text-align: left; } 
-        th { padding: 1.2rem 1rem; font-size: 0.85rem; font-weight: 800; color: var(--text-label); border-bottom: 2px solid var(--border-color); white-space: nowrap; text-align: left; text-transform: uppercase; letter-spacing: 0.5px;} 
-        td { padding: 1.25rem 1rem; font-size: 1rem; font-weight: 600; color: var(--text-main); border-bottom: 1px solid #f8fafc; white-space: nowrap; text-align: left; vertical-align: middle; } 
-        tr:hover td { background-color: #ffffff; }
-        .text-profit { color: #10b981; font-family: 'Inter', monospace; font-weight: 800;} .text-loss { color: #dc2626; font-family: 'Inter', monospace; font-weight: 800;}
+        table { width: 100%; border-collapse: collapse; text-align: center; } 
+        th { padding: 1rem 0.75rem; font-size: 0.75rem; font-weight: 700; color: var(--text-label); border-bottom: 1px solid var(--border-base); white-space: nowrap; text-align: center; text-transform: uppercase; letter-spacing: 0.05em;} 
+        td { padding: 1.25rem 0.75rem; font-size: 0.9rem; font-weight: 600; color: var(--text-main); border-bottom: 1px solid #f1f5f9; white-space: nowrap; text-align: center; vertical-align: middle; } 
+        tr:hover td { background-color: #f8fafc; }
+        .text-profit { color: #10b981; font-family: 'Inter', monospace;} .text-loss { color: #dc2626; font-family: 'Inter', monospace;}
         
         input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0;}
-        .status-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;} .dot-green{background-color:#10b981;} .dot-yellow{background-color:#f59e0b;}
+        .status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;} .dot-green{background-color:#10b981; animation: pulse-green 2s infinite;} .dot-yellow{background-color:#f59e0b;}
+        @keyframes pulse-green { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16,185,129,0.4); } 70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16,185,129,0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16,185,129,0); } }
         
-        #csvPasteArea { width: 100%; height: 140px; border: 2px dashed var(--input-border); border-radius: var(--radius-input); padding: 1.25rem; font-size: 0.9rem; font-family: monospace; color: var(--text-main); background: #ffffff; resize: vertical; margin-bottom: 1rem; outline: none; transition: border-color 0.2s ease;}
-        #csvPasteArea:focus { border-color: var(--color-ozon); box-shadow: 0 0 0 4px rgba(0, 91, 255, 0.15); border-style: solid;}
+        #csvPasteArea { width: 100%; height: 120px; border: 1px dashed var(--border-active); border-radius: 12px; padding: 1rem; font-size: 0.85rem; font-family: monospace; color: var(--text-main); background: #f8fafc; resize: vertical; margin-bottom: 1rem; outline: none; transition: all 0.2s ease;}
+        #csvPasteArea:focus { border-color: var(--color-ozon); background: #fff; box-shadow: 0 0 0 3px rgba(0, 91, 255, 0.15); border-style: solid;}
         
         .fade-in { animation: fadeIn 0.3s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        
-        #pasteModal { border-radius: var(--radius-card); padding: 2rem;}
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        #pasteModal { border-radius: 16px; }
     </style>
 </head>
 <body>
@@ -213,8 +244,8 @@
         <div class="nav-actions">
             <button class="btn btn-nav" onclick="exportData()">导出数据备份</button>
             <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importData(event)">
-            <button class="btn btn-nav" onclick="document.getElementById('importFile').click()">导入数据恢复</button>
-            <button class="btn btn-nav-danger" onclick="clearAllData()">清空本地缓存</button>
+            <button class="btn btn-nav" onclick="document.getElementById('importFile').click()">导入数据</button>
+            <button class="btn btn-nav-danger" onclick="clearAllData()">清理所有缓存</button>
         </div>
     </div>
 </div>
@@ -258,14 +289,14 @@
                 <button class="btn btn-outline" onclick="showDashboard()">返回大厅</button>
                 <span id="currentPlatBadge" class="plat-tag tag-wb">WB</span>
                 <input type="text" class="sku-input" id="skuName" placeholder="录入 SKU 或品名...">
-                <button class="btn btn-primary" onclick="saveProduct()">保存方案</button>
+                <button class="btn btn-success" onclick="saveProduct()">保存方案</button>
             </div>
             <div style="display: flex; gap: 0.8rem; align-items: center;">
                 <button class="btn btn-outline" style="color: #4f46e5; border-color: #c7d2fe; background: #eef2ff;" onclick="copyToClipboard(this)">
                     一键复制长图
                 </button>
                 <div class="template-group">
-                    <div class="select-wrapper" style="width: 140px;"><select id="templateSelect"><option value="">-- 参数模板 --</option></select></div>
+                    <div class="select-wrapper" style="width: 140px;"><select id="templateSelect"><option value="">-- 通用参数模板 --</option></select></div>
                     <button class="btn-icon" style="color:var(--color-indigo-500)" onclick="applyTemplate()" title="应用选中的模板">应用</button>
                     <button class="btn-icon" style="color:var(--color-amber-500)" onclick="saveAsTemplate()" title="将当前参数存为新模板">存为模板</button>
                     <button class="btn-icon" style="color:var(--color-red-600)" onclick="deleteTemplate()" title="删除该模板">删除</button>
@@ -273,7 +304,7 @@
             </div>
         </div>
 
-        <div id="captureArea" style="padding: 10px; margin: -10px; border-radius: var(--radius-card);">
+        <div id="captureArea" style="padding: 10px; margin: -10px; border-radius: 20px;">
             <div class="detail-grid">
                 
                 <div class="col-left">
@@ -338,7 +369,7 @@
                             <div class="input-group"><label>附加增值税率 (НДС)</label><div class="input-wrapper"><div id="vatRateDisp" class="value-display">0</div><span class="symbol">%</span></div></div>
                         </div>
                         <div class="result-row">
-                            <div class="result-box res-light-amber" style="flex:1;"><label>核算 税额 (RUB)</label><div class="input-wrapper"><span class="symbol" style="color:#d97706;">₽</span><div id="taxRub" class="value-display" style="color:#b45309;">0</div></div></div>
+                            <div class="result-box res-tint-amber text-left-input"><label>预估核算税额 (RUB)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="taxRub" class="value-display">0</div></div></div>
                         </div>
                     </div>
                 </div>
@@ -401,12 +432,12 @@
                             <div class="result-row">
                                 <div class="result-box res-tint-amber res-small text-left-input"><label>广告其它费</label><div class="input-wrapper"><span class="symbol">₽</span><div id="wb_adFee" class="value-display">0</div></div></div>
                                 <div class="result-box res-tint-amber res-small text-left-input"><label>无法均摊 (1%)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="wb_unallocatedFee" class="value-display">0</div></div></div>
-                                <div class="result-box res-tint-amber res-small text-left-input"><label>FBW仓租 (30天)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="wb_fbwStorageFee" class="value-display">0</div></div></div>
+                                <div class="result-box res-tint-amber res-small text-left-input"><label>FBW存储 (30天)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="wb_fbwStorageFee" class="value-display">0</div></div></div>
                             </div>
                             
                             <div class="result-row" style="margin-top:1.5rem;">
-                                <div class="result-box res-solid-red text-left-input" style="padding:1.25rem;"><label style="font-size:1rem;">WB 平台总扣费 (RUB)</label><div class="input-wrapper"><span class="symbol" style="font-size:1.5rem; color:#fff;">₽</span><div id="wb_wbTotalDeduction" class="value-display" style="font-size:2.5rem; color:#fff;">0</div></div></div>
-                                <div class="result-box res-solid-red text-left-input" style="padding:1.25rem; flex: 0.5;"><label style="font-size:1rem;">平台扣费占比</label><div class="input-wrapper"><div id="wb_wbDeductionRatio" class="value-display" style="font-size: 2.5rem; color:#fff;">0.00</div><span class="symbol" style="font-size: 1.5rem; color:#fff;">%</span></div></div>
+                                <div class="result-box res-solid-red text-left-input" style="padding:1.25rem;"><label>WB 平台总扣费 (RUB)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="wb_wbTotalDeduction" class="value-display">0</div></div></div>
+                                <div class="result-box res-solid-red text-left-input" style="padding:1.25rem; flex: 0.5;"><label>平台扣费占比</label><div class="input-wrapper"><div id="wb_wbDeductionRatio" class="value-display">0.00</div><span class="symbol">%</span></div></div>
                             </div>
                         </div>
                     </div>
@@ -417,16 +448,16 @@
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem; position: relative; z-index: 2;">
                                 <h2 class="card-title" style="margin:0;"><div class="card-title-indicator bg-ozon"></div>Ozon 平台费用板块</h2>
                                 <div style="text-align: right;">
-                                    <button class="btn btn-warning" style="font-size: 0.85rem; padding: 0.5rem 1rem;" onclick="document.getElementById('pasteModal').style.display='block'">文本直接粘贴导入 Ozon 费率表</button>
+                                    <button class="btn btn-outline" style="font-size: 0.85rem; padding: 0.5rem 1rem; color: var(--color-ozon); border-color: #bfdbfe;" onclick="document.getElementById('pasteModal').style.display='block'">配置官方查表字典</button>
                                     <div id="ozonDbStatus" style="font-size: 0.8rem; color: #f59e0b; margin-top: 0.5rem; font-weight: 600; display: flex; align-items: center; justify-content: flex-end;">
-                                        <span class="status-dot dot-yellow"></span>未导入 (当前使用底线估算)
+                                        <span class="status-dot dot-yellow"></span>未导入 (当前使用系统底线估算)
                                     </div>
                                 </div>
                             </div>
                             
-                            <div id="pasteModal" style="display:none; background: #ffffff; border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; position: relative; box-shadow: var(--card-shadow); z-index: 10;">
+                            <div id="pasteModal" style="display:none; background: #ffffff; border: 1px solid var(--border-base); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; position: relative; box-shadow: var(--shadow-card); z-index: 10;">
                                 <button style="position: absolute; right: 15px; top: 15px; background:transparent; border:none; font-size:1.2rem; cursor:pointer; color:var(--text-muted);" onclick="document.getElementById('pasteModal').style.display='none'">关闭</button>
-                                <label style="font-weight: 700; color: var(--text-main); display:block; margin-bottom: 0.5rem; font-size: 1rem;">请粘贴 Ozon 数据源</label>
+                                <label style="font-weight: 700; color: var(--text-main); display:block; margin-bottom: 0.5rem; font-size: 1rem;">粘贴 Ozon 数据源</label>
                                 <p style="font-size: 0.85rem; color: var(--text-label); margin-bottom: 1rem; line-height: 1.5;">请在 Ozon《Логистика РФ》Excel 文件中，按 <b>Ctrl+A</b> 全选单元格内容，并将其粘贴到下方文本框内。</p>
                                 <textarea id="csvPasteArea" placeholder="在此处粘贴 Excel 单元格内容..."></textarea>
                                 <button class="btn btn-primary" style="width: 100%; margin-top:0.5rem; background-color: var(--color-ozon);" onclick="parsePastedExcel()">解析并构建本地数据字典</button>
@@ -471,7 +502,7 @@
                                 <div class="input-group" id="ozon_processing_container" style="transition: all 0.2s ease;"><label>包裹处理费 (FBS)</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="ozon_processing" placeholder="0" oninput="calculateAll()"></div></div>
                                 <div class="input-group"><label>退货处理费</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="ozon_returnProcessing" placeholder="0" oninput="calculateAll()"></div></div>
                             </div>
-                            <div class="result-row" style="background:#f8fafc; border-radius:12px; padding: 1rem 1.25rem; margin-top:0.5rem; border: 1px solid var(--border-color);">
+                            <div class="result-row" style="background:#f0fdfa; border-radius:12px; padding: 1rem 1.25rem; margin-top:0.5rem; border: 1px solid var(--border-light);">
                                 <div class="result-box text-left-input" style="padding:0; background:transparent; border:none;" id="ozon_fwdSort_container"><label>去程分拣 (查表)</label><div class="input-wrapper"><span class="symbol" style="color:#475569;">₽</span><div id="ozon_fwdSort" class="value-display">0</div></div></div>
                                 <div class="result-box text-left-input" style="padding:0; background:transparent; border:none;" id="ozon_crossMarkup_container" style="transition: all 0.2s ease;"><label>非本地加价 (FBO)</label><div class="input-wrapper"><span class="symbol" style="color:#475569;">₽</span><div id="ozon_crossMarkup" class="value-display">0</div></div></div>
                                 <div class="result-box res-dark-teal res-small" style="margin-left:auto;"><label>正向·全程配送</label><div class="input-wrapper"><span class="symbol">₽</span><div id="ozon_forwardTotal" class="value-display" style="color:#fff;">0</div></div></div>
@@ -484,17 +515,17 @@
                             
                             <div class="sub-module-title">Ozon 杂项与仓储费用</div>
                             <div class="input-row">
-                                <div class="input-group"><label>广告其它</label><div class="input-wrapper"><input type="number" id="ozon_adRate" placeholder="0.0" oninput="calculateAll()"><span class="symbol">%</span></div></div>
+                                <div class="input-group"><label>广告其它</label><div class="input-wrapper"><input type="number" id="ozon_adRate" placeholder="0" oninput="calculateAll()"><span class="symbol">%</span></div></div>
                                 <div class="input-group"><label>仓储 每L/天</label><div class="input-wrapper"><span class="symbol">₽</span><input type="number" id="ozon_storagePerL" placeholder="0.00" oninput="calculateAll()"></div></div>
                             </div>
                             <div class="result-row">
                                 <div class="result-box res-tint-amber res-small text-left-input"><label>广告其它费</label><div class="input-wrapper"><span class="symbol">₽</span><div id="ozon_adFee" class="value-display">0</div></div></div>
                                 <div class="result-box res-tint-amber res-small text-left-input"><label>无法均摊 (1%)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="ozon_unallocatedFee" class="value-display">0</div></div></div>
-                                <div class="result-box res-tint-amber res-small text-left-input"><label>FBO仓租 (30天)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="ozon_fboStorageFee" class="value-display">0</div></div></div>
+                                <div class="result-box res-tint-amber res-small text-left-input"><label>FBO存储 (30天)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="ozon_fboStorageFee" class="value-display">0</div></div></div>
                             </div>
                             <div class="result-row" style="margin-top:1.5rem;">
-                                <div class="result-box res-solid-red text-left-input" style="padding:1.25rem;"><label style="font-size:1rem;">Ozon 平台总扣费 (RUB)</label><div class="input-wrapper"><span class="symbol" style="font-size:1.5rem; color:#fff;">₽</span><div id="ozon_wbTotalDeduction" class="value-display" style="font-size:2.5rem; color:#fff;">0</div></div></div>
-                                <div class="result-box res-solid-red text-left-input" style="padding:1.25rem; flex: 0.5;"><label style="font-size:1rem;">平台扣费占比</label><div class="input-wrapper"><div id="ozon_wbDeductionRatio" class="value-display" style="font-size:2.5rem; color:#fff;">0.00</div><span class="symbol" style="font-size: 1.5rem; color:#fff;">%</span></div></div>
+                                <div class="result-box res-solid-red text-left-input" style="padding:1.25rem;"><label>Ozon 平台总扣费 (RUB)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="ozon_wbTotalDeduction" class="value-display">0</div></div></div>
+                                <div class="result-box res-solid-red text-left-input" style="padding:1.25rem; flex: 0.5;"><label>平台扣费占比</label><div class="input-wrapper"><div id="ozon_wbDeductionRatio" class="value-display">0.00</div><span class="symbol">%</span></div></div>
                             </div>
                         </div>
                     </div>
@@ -513,20 +544,20 @@
                 <div class="result-row" style="margin-top: 0.5rem;">
                     <div class="result-box res-tint-blue res-small text-left-input"><label>产品着陆总成本 (RUB)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="totalUnitCost" class="value-display">0</div></div></div>
                     
-                    <div class="result-box res-solid-green text-left-input" id="profitRubBox" style="padding: 1.5rem;"><label>单件净利润 (RUB)</label><div class="input-wrapper"><span class="symbol" style="font-size:1.5rem; color:#fff;">₽</span><div id="profitRub" class="value-display" style="color:#fff;">0</div></div></div>
-                    <div class="result-box res-solid-green text-left-input" id="profitRmbBox" style="padding: 1.5rem;"><label>单件净利润 (RMB)</label><div class="input-wrapper"><span class="symbol" style="font-size:1.5rem; color:#fff;">¥</span><div id="profitRmb" class="value-display" style="color:#fff;">0</div></div></div>
+                    <div class="result-box res-solid-green text-left-input" id="profitRubBox" style="padding: 1.25rem 1.5rem;"><label>单件净利润 (RUB)</label><div class="input-wrapper"><span class="symbol">₽</span><div id="profitRub" class="value-display">0</div></div></div>
+                    <div class="result-box res-solid-green text-left-input" id="profitRmbBox" style="padding: 1.25rem 1.5rem;"><label>单件净利润 (RMB)</label><div class="input-wrapper"><span class="symbol">¥</span><div id="profitRmb" class="value-display">0</div></div></div>
                 </div>
                 
                 <div class="result-row" style="border:none; padding-top:1.5rem; gap:1.5rem;">
                     <div class="progress-box" id="marginBox" style="flex:1;">
-                        <div class="progress-bar bar-blue" id="marginBar"></div>
+                        <div class="progress-bar bar-green" id="marginBar"></div>
                         <label style="position:relative; z-index:2;">核心净利润率 (Net Margin)</label>
-                        <div class="input-wrapper" style="position:relative; z-index:2;"><div id="netMargin" class="value-display">0.00</div><span class="symbol" style="font-size: 1.4rem;">%</span></div>
+                        <div class="input-wrapper" style="position:relative; z-index:2;"><div id="netMargin" class="value-display">0.00</div><span class="symbol">%</span></div>
                     </div>
                     <div class="progress-box" id="roiBox" style="flex:1;">
                         <div class="progress-bar bar-green" id="roiBar"></div>
                         <label style="position:relative; z-index:2;">投资回报率 (ROI)</label>
-                        <div class="input-wrapper" style="position:relative; z-index:2;"><div id="roiRate" class="value-display">0.00</div><span class="symbol" style="font-size: 1.4rem;">%</span></div>
+                        <div class="input-wrapper" style="position:relative; z-index:2;"><div id="roiRate" class="value-display">0.00</div><span class="symbol">%</span></div>
                     </div>
                 </div>
             </div>
@@ -535,13 +566,12 @@
 </div>
 
 <script>
-// ==================== 📸 防降级增强版一键截图引擎 ====================
+// ==================== 📸 防降级截图引擎 ====================
 async function copyToClipboard(btn) {
     let originalHTML = btn.innerHTML;
-    btn.innerHTML = '正在渲染完美长图...';
+    btn.innerHTML = '正在渲染长图...';
     btn.disabled = true;
     
-    // 冻结动画防止错位
     document.body.classList.add('no-animation'); 
     
     try {
@@ -555,20 +585,18 @@ async function copyToClipboard(btn) {
         
         canvas.toBlob(async function(blob) {
             try {
-                // 尝试写入系统剪贴板
                 const item = new ClipboardItem({ 'image/png': blob });
                 await navigator.clipboard.write([item]);
-                btn.innerHTML = '✅ 已复制，可直接粘贴！';
+                btn.innerHTML = '已复制，可直接粘贴！';
                 btn.style.backgroundColor = '#10b981';
                 btn.style.color = '#fff';
                 btn.style.borderColor = '#10b981';
             } catch (err) {
-                // 自动降级为下载
                 let a = document.createElement('a');
                 a.href = URL.createObjectURL(blob);
                 a.download = `核算方案截图_${Date.now()}.png`;
                 a.click();
-                btn.innerHTML = '✅ 已自动下载长图！';
+                btn.innerHTML = '已自动下载长截图！';
                 btn.style.backgroundColor = '#10b981';
                 btn.style.color = '#fff';
                 btn.style.borderColor = '#10b981';
@@ -585,7 +613,7 @@ async function copyToClipboard(btn) {
             document.body.classList.remove('no-animation');
         }, 'image/png');
     } catch (err) {
-        alert('截图引擎生成失败！');
+        alert('截图生成失败！');
         btn.innerHTML = originalHTML;
         btn.disabled = false;
         document.body.classList.remove('no-animation');
@@ -596,7 +624,7 @@ async function copyToClipboard(btn) {
 document.addEventListener('contextmenu', e => e.preventDefault());
 document.addEventListener('keydown', e => { if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) { e.preventDefault(); } });
 
-// WB 本地化指数配置表 (完整 21 阶梯)
+// WB 本地化指数配置表
 const wbLocMap = {
     "95-100": { reg: 0.5, krp: 0.00 }, "90-94":  { reg: 0.65, krp: 0.00 }, "85-89":  { reg: 0.75, krp: 0.00 },
     "80-84":  { reg: 0.85, krp: 0.00 }, "75-79":  { reg: 0.95, krp: 0.00 }, "70-74":  { reg: 1.0, krp: 0.00 },
@@ -640,21 +668,15 @@ function getArrayData(key) { try { let res = JSON.parse(localStorage.getItem(key
 function setData(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
 function getVal(id) { let el = document.getElementById(id); return el ? (parseFloat(el.value) || 0) : 0; }
 
-// 【核心修复】：解决 Div 不显示的 Bug
+// ==================== 关键修复：安全的元素赋值引擎 ====================
 function setFmt(id, val, isFloat = false) {
     let el = document.getElementById(id);
     if (el) {
-        let txt;
-        if (val === 0 || isNaN(val)) {
-            txt = isFloat ? '0.00' : '0';
-        } else {
-            txt = isFloat ? parseFloat(val).toFixed(2) : Math.round(val).toLocaleString();
-        }
-        
+        let txt = val !== 0 ? (isFloat ? val.toFixed(2) : Math.round(val).toLocaleString()) : '0';
         if (el.tagName === 'INPUT' || el.tagName === 'SELECT') {
             el.value = txt;
         } else {
-            el.innerText = txt;
+            el.innerText = txt; // 适配 div 和 span
         }
     }
     return val;
@@ -696,7 +718,7 @@ function updateOzonDbStatus() {
     let matrix = getData('ozon_matrix_cache');
     if (!statusEl) return;
     if (matrix && Object.keys(matrix).length > 0) {
-        statusEl.innerHTML = '<span class="status-dot dot-green"></span>已加载全量数据字典 (精确匹配)';
+        statusEl.innerHTML = '<span class="status-dot dot-green"></span>已加载本地全量集群数据字典 (精确匹配)';
         statusEl.style.color = '#10b981';
     } else {
         statusEl.innerHTML = '<span class="status-dot dot-yellow"></span>未导入 (当前使用系统底线默认价)';
@@ -805,6 +827,7 @@ function calculateAll() {
             let bankFee = price * 0.015; setFmt('wb_bankFee', bankFee);
 
             let locInfo = wbLocMap[document.getElementById('wb_locIndex').value] || { reg: 1.0, krp: 0 };
+            // 修复: 使用 setFmt 对 div 赋值
             setFmt('wb_krpRatio', locInfo.krp * 100, true);
             
             let fbwMultiplier = getVal('wb_fbwMultiplier') || 1;
@@ -824,6 +847,7 @@ function calculateAll() {
             let deliveryRate = getVal('wb_deliveryRate'); if (deliveryRate <= 0) deliveryRate = 100;
             
             let totalLogisticsCost = (100 / deliveryRate) * totalJourney + ((100 / deliveryRate) - 1) * reverseFee; setFmt('wb_totalLogisticsCost', totalLogisticsCost);
+            // 修复: 使用 setFmt
             setFmt('wb_logRatio', price > 0 ? (totalLogisticsCost / price) * 100 : 0, true);
 
             let adFee = price * (getVal('wb_adRate') / 100); setFmt('wb_adFee', adFee);
@@ -831,6 +855,7 @@ function calculateAll() {
             let fbwStorageFee = getVal('wb_storagePerL') * fbwMultiplier * volume * 30; setFmt('wb_fbwStorageFee', fbwStorageFee);
 
             finalTotalDeduction = commissionFee + bankFee + totalLogisticsCost + adFee + unallocatedFee + fbwStorageFee; setFmt('wb_wbTotalDeduction', finalTotalDeduction);
+            // 修复: 使用 setFmt
             setFmt('wb_wbDeductionRatio', price > 0 ? (finalTotalDeduction / price) * 100 : 0, true);
 
         } else if (currentPlatform === 'Ozon') {
@@ -852,11 +877,20 @@ function calculateAll() {
             let crossMarkup = 0; if (method === 'FBO' && fromC !== toC) { let rate = ozonCrossMarkupRate[toC] || 0; crossMarkup = price * rate; }
             setFmt('ozon_crossMarkup', crossMarkup);
 
-            let lastMile = getVal('ozon_lastMile'); let processing = method === 'FBS' ? getVal('ozon_processing') : 0; let returnProc = getVal('ozon_returnProcessing');
+            let lastMile = getVal('ozon_lastMile'); 
+            let processing = method === 'FBS' ? getVal('ozon_processing') : 0; 
+            let returnProc = getVal('ozon_returnProcessing');
+            
             let forwardTotal = fwdSort + crossMarkup + processing + lastMile; setFmt('ozon_forwardTotal', forwardTotal);
-            let revSort = getOzonSortFee(volume, price, toC, toC); let reverseTotal = returnProc + revSort; setFmt('ozon_reverseTotal', reverseTotal);
+            
+            // 修复: 逆向处理 = 退货处理费 + 退回官方仓分拣
+            let revSort = getOzonSortFee(volume, price, toC, toC); 
+            let reverseTotal = returnProc + revSort; 
+            setFmt('ozon_reverseTotal', reverseTotal);
+            
             let deliveryRate = getVal('ozon_deliveryRate'); if (deliveryRate <= 0) deliveryRate = 100;
             let totalLogisticsCost = (100 / deliveryRate) * forwardTotal + ((100 / deliveryRate) - 1) * reverseTotal; setFmt('ozon_totalLogisticsCost', totalLogisticsCost);
+            // 修复: 使用 setFmt
             setFmt('ozon_logRatio', price > 0 ? (totalLogisticsCost / price) * 100 : 0, true);
 
             let adFee = price * (getVal('ozon_adRate') / 100); setFmt('ozon_adFee', adFee);
@@ -864,10 +898,12 @@ function calculateAll() {
             let fboStorageFee = getVal('ozon_storagePerL') * volume * 30; setFmt('ozon_fboStorageFee', fboStorageFee);
 
             finalTotalDeduction = commissionFee + bankFee + totalLogisticsCost + adFee + unallocatedFee + fboStorageFee; setFmt('ozon_wbTotalDeduction', finalTotalDeduction); 
+            // 修复: 使用 setFmt
             setFmt('ozon_wbDeductionRatio', price > 0 ? (finalTotalDeduction / price) * 100 : 0, true);
         }
 
         let taxOpt = taxMap[document.getElementById('taxSystem').value];
+        // 修复: 使用 setFmt
         setFmt('taxRateDisp', taxOpt.base);
         setFmt('vatRateDisp', taxOpt.vat);
         
@@ -887,6 +923,7 @@ function calculateAll() {
         let profitRub = finalPrice - totalUnitCost; setFmt('profitRub', profitRub);
         let profitRmb = exchangeRate > 0 ? profitRub / exchangeRate : 0; setFmt('profitRmb', profitRmb, true);
 
+        // 修复: 使用 setFmt
         let netMargin = finalPrice > 0 ? (profitRub / finalPrice) * 100 : 0; 
         setFmt('netMargin', netMargin, true);
         
@@ -894,8 +931,8 @@ function calculateAll() {
         setFmt('roiRate', roiRate, true);
 
         let isLoss = profitRub < 0;
-        let pBox1 = document.getElementById('profitRubBox'); if (pBox1) pBox1.className = 'result-box ' + (isLoss ? 'profit-negative' : 'res-solid-green');
-        let pBox2 = document.getElementById('profitRmbBox'); if (pBox2) pBox2.className = 'result-box ' + (isLoss ? 'profit-negative' : 'res-solid-green');
+        let pBox1 = document.getElementById('profitRubBox'); if (pBox1) pBox1.className = 'result-box text-left-input ' + (isLoss ? 'res-solid-red' : 'res-solid-green');
+        let pBox2 = document.getElementById('profitRmbBox'); if (pBox2) pBox2.className = 'result-box text-left-input ' + (isLoss ? 'res-solid-red' : 'res-solid-green');
         
         let mBar = document.getElementById('marginBar'); if (mBar) { mBar.className = 'progress-bar ' + (isLoss ? 'bar-red' : 'bar-green'); mBar.style.width = Math.min(Math.abs(netMargin), 100) + '%'; }
         let rBar = document.getElementById('roiBar'); if (rBar) { rBar.className = 'progress-bar ' + (isLoss ? 'bar-red' : 'bar-green'); rBar.style.width = Math.min(Math.abs(roiRate), 100) + '%'; }
@@ -982,7 +1019,7 @@ function renderTable() {
             let s = p.summary || {}, pl = p.platform || 'WB', pt = pl === 'WB' ? '<span class="plat-tag tag-wb">WB</span>' : '<span class="plat-tag tag-ozon">OZON</span>';
             let profit = parseFloat(s.profitRmb) || 0, c = profit < 0 ? 'text-loss' : 'text-profit', cd = s.platformCommission || s.wbCommissionFee || '0';
             let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${pt}</td><td style="font-weight: 700;">${p.sku || '未知'}</td><td>₽ ${s.price || '0'}</td><td>₽ ${cd}</td><td>₽ ${s.totalLogisticsCost || '0'}</td><td>₽ ${s.wbTotalDeduction || '0'}</td><td>${s.wbDeductionRatio || '0'} %</td><td class="${c}">¥ ${s.profitRmb || '0'}</td><td class="${c}">${s.netMargin || '0'} %</td><td class="${c}">${s.roiRate || '0'} %</td><td><div style="display:flex; justify-content:flex-start; gap:0.5rem;"><button class="btn btn-outline" style="padding:0.35rem 0.8rem;" onclick="editProduct('${p.id}')">编辑</button> <button class="btn btn-danger-outline" style="padding:0.35rem 0.8rem;" onclick="deleteProduct('${p.id}')">删除</button></div></td>`;
+            tr.innerHTML = `<td>${pt}</td><td style="font-weight: 700;">${p.sku || '未知'}</td><td>₽ ${s.price || '0'}</td><td>₽ ${cd}</td><td>₽ ${s.totalLogisticsCost || '0'}</td><td>₽ ${s.wbTotalDeduction || '0'}</td><td>${s.wbDeductionRatio || '0'} %</td><td class="${c}">¥ ${s.profitRmb || '0'}</td><td class="${c}">${s.netMargin || '0'} %</td><td class="${c}">${s.roiRate || '0'} %</td><td><div style="display:flex; justify-content:center; gap:0.5rem;"><button class="btn btn-outline" style="padding:0.35rem 0.85rem;" onclick="editProduct('${p.id}')">编辑</button> <button class="btn btn-danger-outline" style="padding:0.35rem 0.85rem;" onclick="deleteProduct('${p.id}')">删除</button></div></td>`;
             tb.appendChild(tr);
         });
     } catch (e) { tb.innerHTML = '<tr><td colspan="11" style="text-align:center; color:red;">渲染列表失败，请点击清理缓存</td></tr>'; }
